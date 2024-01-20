@@ -5,6 +5,7 @@ import br.com.fiap.fasteats.core.domain.model.StatusPedido;
 import java.util.List;
 
 public interface StatusPedidoInputPort {
+
     StatusPedido criar(StatusPedido statusPedido);
 
     StatusPedido consultar(Long id);

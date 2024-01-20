@@ -2,8 +2,8 @@ package br.com.fiap.fasteats.core.usecase.impl.unit;
 
 import br.com.fiap.fasteats.core.domain.exception.RegraNegocioException;
 import br.com.fiap.fasteats.core.domain.model.Pedido;
+import br.com.fiap.fasteats.core.usecase.impl.CozinhaPedidoUseCase;
 import br.com.fiap.fasteats.core.usecase.pedido.AlterarPedidoStatusInputPort;
-import br.com.fiap.fasteats.core.usecase.impl.pedido.CozinhaPedidoUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

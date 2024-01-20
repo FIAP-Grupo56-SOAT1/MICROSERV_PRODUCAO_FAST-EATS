@@ -23,8 +23,8 @@ public class PedidoUseCase implements PedidoInputPort {
     private final PedidoValidator pedidoValidator;
 
     public PedidoUseCase(PedidoOutputPort pedidoOutputPort, ClienteInputPort clienteInputPort,
-            StatusPedidoInputPort statusPedidoInputPort, PagamentoOutputPort pagamentoOutputPort,
-            PedidoValidator pedidoValidator) {
+                         StatusPedidoInputPort statusPedidoInputPort, PagamentoOutputPort pagamentoOutputPort,
+                         PedidoValidator pedidoValidator) {
         this.pedidoOutputPort = pedidoOutputPort;
         this.clienteInputPort = clienteInputPort;
         this.statusPedidoInputPort = statusPedidoInputPort;

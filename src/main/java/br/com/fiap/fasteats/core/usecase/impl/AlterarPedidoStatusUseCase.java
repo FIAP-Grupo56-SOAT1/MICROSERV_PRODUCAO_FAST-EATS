@@ -1,9 +1,10 @@
-package br.com.fiap.fasteats.core.usecase.impl.pedido;
+package br.com.fiap.fasteats.core.usecase.impl;
 
 import br.com.fiap.fasteats.core.dataprovider.PagamentoOutputPort;
 import br.com.fiap.fasteats.core.dataprovider.PedidoOutputPort;
 import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
 import br.com.fiap.fasteats.core.domain.model.Pedido;
+import br.com.fiap.fasteats.core.usecase.impl.pedido.PedidoUseCase;
 import br.com.fiap.fasteats.core.usecase.pedido.AlterarPedidoStatusInputPort;
 import br.com.fiap.fasteats.core.usecase.pedido.StatusPedidoInputPort;
 import br.com.fiap.fasteats.core.validator.AlterarPedidoStatusValidator;
