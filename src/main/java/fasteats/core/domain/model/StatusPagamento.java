@@ -1,12 +1,10 @@
-package br.com.fiap.fasteats.core.domain.model;
+package fasteats.core.domain.model;
 
 import java.util.Objects;
 
-public class FormaPagamento {
-
+public class StatusPagamento {
     private Long id;
     private String nome;
-    private Boolean externo;
     private Boolean ativo;
 
     public void setId(Long id) {
@@ -25,14 +23,6 @@ public class FormaPagamento {
         this.nome = nome;
     }
 
-    public Boolean getExterno() {
-        return externo;
-    }
-
-    public void setExterno(Boolean externo) {
-        this.externo = externo;
-    }
-
     public Boolean getAtivo() {
         return ativo;
     }
@@ -45,7 +35,7 @@ public class FormaPagamento {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FormaPagamento that = (FormaPagamento) o;
+        StatusPagamento that = (StatusPagamento) o;
         return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(ativo, that.ativo);
     }
 
@@ -56,17 +46,17 @@ public class FormaPagamento {
 
     @Override
     public String toString() {
-        return "FormaPagamento{" +
+        return "StatusPagamento{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", ativo=" + ativo +
                 '}';
     }
 
-    public FormaPagamento() {
+    public StatusPagamento() {
     }
 
-    public FormaPagamento(Long id, String nome, Boolean ativo) {
+    public StatusPagamento(Long id, String nome, Boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.ativo = ativo;

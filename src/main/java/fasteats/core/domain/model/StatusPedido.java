@@ -1,20 +1,18 @@
-package br.com.fiap.fasteats.core.domain.model;
+package fasteats.core.domain.model;
 
 import java.util.Objects;
 
-public class Categoria {
+public class StatusPedido {
     private Long id;
     private String nome;
-    private String descricao;
     private Boolean ativo;
 
-    public Categoria() {
+    public StatusPedido() {
     }
 
-    public Categoria(Long id, String nome, String descricao, Boolean ativo) {
+    public StatusPedido(Long id, String nome, Boolean ativo) {
         this.id = id;
         this.nome = nome;
-        this.descricao = descricao;
         this.ativo = ativo;
     }
 
@@ -34,14 +32,6 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public Boolean getAtivo() {
         return ativo;
     }
@@ -54,21 +44,20 @@ public class Categoria {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return Objects.equals(id, categoria.id) && Objects.equals(nome, categoria.nome) && Objects.equals(descricao, categoria.descricao) && Objects.equals(ativo, categoria.ativo);
+        StatusPedido that = (StatusPedido) o;
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(ativo, that.ativo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, ativo);
+        return Objects.hash(id, nome, ativo);
     }
 
     @Override
     public String toString() {
-        return "Categoria{" +
+        return "StatusPedido{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
                 ", ativo=" + ativo +
                 '}';
     }
