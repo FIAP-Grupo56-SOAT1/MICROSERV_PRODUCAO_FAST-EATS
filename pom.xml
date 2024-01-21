@@ -110,6 +110,16 @@
             <artifactId>sdk-java</artifactId>
             <version>2.1.12</version>
         </dependency>
+
+
+            <!-- Mongo Db -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>

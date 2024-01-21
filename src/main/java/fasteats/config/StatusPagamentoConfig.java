@@ -1,0 +1,14 @@
+package fasteats.config;
+
+import br.com.fiap.fasteats.core.usecase.impl.pagamento.StatusPagamentoUseCase;
+import br.com.fiap.fasteats.core.dataprovider.StatusPagamentoOutputPort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class StatusPagamentoConfig {
+    @Bean
+    public StatusPagamentoUseCase crudStatusPagamentoUseCase(StatusPagamentoOutputPort statusPagamentoOutputPort) {
+        return new StatusPagamentoUseCase(statusPagamentoOutputPort);
+    }
+}
