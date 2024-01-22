@@ -15,13 +15,6 @@ public class StatusPedidoUseCase implements StatusPedidoInputPort {
         this.statusPedidoOutputPort = statusPedidoOutputPort;
     }
 
-
-    @Override
-    public StatusPedido consultar(Long id) {
-        return statusPedidoOutputPort.consultar(id).orElseThrow(() -> new StatusPedidoNotFound("StatusPedido id:" + id + " não encontrado"));
-    }
-
-
     @Override
     public List<StatusPedido> listar() {
         return statusPedidoOutputPort.listar().orElseThrow(() -> new StatusPedidoNotFound("Não foram encontrados registros no StatusPedido"));

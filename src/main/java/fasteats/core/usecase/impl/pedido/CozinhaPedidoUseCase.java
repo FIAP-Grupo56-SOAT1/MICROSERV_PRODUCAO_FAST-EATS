@@ -1,13 +1,35 @@
 package fasteats.core.usecase.impl.pedido;
 
+import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.core.usecase.pedido.CozinhaPedidoInputPort;
 
 
 public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
 
+     private final AlterarPedidoStatusInputPort alterarPedidoStatusInputPort;
+
+    @Override
+    public Pedido receberPedido(Long pedidoId) {
+        return null;
+    }
+
+    @Override
+    public Pedido iniciarPreparoPedido(Long pedidoId) {
+        return null;
+    }
+
+    @Override
+    public Pedido finalizarPreparoPedido(Long pedidoId) {
+        return null;
+    }
+
+    @Override
+    public Pedido retirarPedido(Long pedidoId) {
+        return null;
+    }
 
 
-//    private final AlterarPedidoStatusInputPort alterarPedidoStatusInputPort;
+
 //
 //    public CozinhaPedidoUseCase(AlterarPedidoStatusInputPort alterarPedidoStatusInputPort) {
 //        this.alterarPedidoStatusInputPort = alterarPedidoStatusInputPort;

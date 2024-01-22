@@ -5,7 +5,7 @@ metadata:
 data:
   DB_HOST: "mysql"
   DB_DATABASE: "testemed"
-  DB_PASSWORD: "teste@123"
+  DB_PASSWORD: "12345"
   MYSQL_ENV_DB_USER: "root"
   MYSQL_DATABASE: "fasteatsdb"
   spring.datasource.url: "mysql"
