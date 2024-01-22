@@ -17,6 +17,11 @@ public class PedidoAdapter implements PedidoOutputPort {
     private final PedidoEntityMapper pedidoEntityMapper;
 
     @Override
+    public Pedido salvarPedido(Pedido pedido) {
+        return null;
+    }
+
+    @Override
     public Optional<Pedido> consultarPedido(Long id) {
         return Optional.empty();
     }

@@ -18,16 +18,16 @@ import static br.com.fiap.fasteats.core.constants.StatusPagamentoConstants.STATU
 public class MercadoPagoAdapter implements PagamentoExternoOutputPort {
     private final PagamentoInputPort pagamentoInputPort;
     private final StatusPagamentoInputPort statusPagamentoInputPort;
-    private final IntegracaoMercadoPago integracaoMercadoPago;
+
 
     @Override
     public PagamentoExterno consultar(PagamentoExterno pagamentoExternoRequisicao) {
-        return integracaoMercadoPago.consultarPagamento(pagamentoExternoRequisicao);
+        return null;
     }
 
     @Override
     public PagamentoExterno cancelarPagamento(Long pagamentoExternoId) {
-        return integracaoMercadoPago.cancelarPagamento(pagamentoExternoId);
+        return null;
     }
 
     @Override

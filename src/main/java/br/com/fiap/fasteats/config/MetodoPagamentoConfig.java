@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class MetodoPagamentoConfig {
     @Bean
     public MetodoPagamentoUseCase metodoPagamentoUseCase(PagamentoUseCase pagamentoUseCase,
-                                                         FormaPagamentoUseCase formaPagamentoUseCase,
-                                                         IntegracaoMercadoPago integracaoMercadoPago) {
-        return new MetodoPagamentoUseCase(pagamentoUseCase, formaPagamentoUseCase, integracaoMercadoPago);
+                                                         FormaPagamentoUseCase formaPagamentoUseCase) {
+        return new MetodoPagamentoUseCase(pagamentoUseCase, formaPagamentoUseCase);
     }
 }

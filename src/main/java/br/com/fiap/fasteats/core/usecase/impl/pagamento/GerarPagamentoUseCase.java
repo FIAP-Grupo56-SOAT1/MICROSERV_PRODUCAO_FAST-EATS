@@ -34,9 +34,6 @@ public class GerarPagamentoUseCase implements GerarPagamentoInputPort {
             case PIX -> {
                 return metodoPagamentoInputPort.pix(pedido);
             }
-            case MERCADO_PAGO -> {
-                return metodoPagamentoInputPort.mercadoPago(pedido);
-            }
             default -> throw new StatusPagametoNotFound("Forma de Pagamento não cadastrada");
         }
     }

@@ -1,14 +1,13 @@
 package br.com.fiap.fasteats.dataprovider;
 
+import br.com.fiap.fasteats.core.dataprovider.StatusPedidoOutputPort;
 import br.com.fiap.fasteats.core.domain.exception.StatusPedidoNotFound;
+import br.com.fiap.fasteats.core.domain.model.StatusPedido;
+import br.com.fiap.fasteats.dataprovider.client.StatusPedidoIntegration;
 import br.com.fiap.fasteats.dataprovider.client.mapper.StatusPedidoMapper;
 import br.com.fiap.fasteats.dataprovider.client.response.StatusPedidoResponse;
-import br.com.fiap.fasteats.dataprovider.repository.mapper.StatusPedidoEntityMapper;
-import br.com.fiap.fasteats.core.domain.model.StatusPedido;
-import br.com.fiap.fasteats.core.dataprovider.StatusPedidoOutputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import br.com.fiap.fasteats.dataprovider.client.StatusPedidoIntegration;
 
 import java.util.List;
 import java.util.Optional;

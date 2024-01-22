@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface StatusPagamentoOutputPort {
     Optional<StatusPagamento> consultar(Long id);
     Optional<List<StatusPagamento>> listar();
-
     Optional<StatusPagamento> consultarPorNome(String nome);
 }

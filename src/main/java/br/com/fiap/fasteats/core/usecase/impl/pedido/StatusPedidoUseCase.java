@@ -24,4 +24,11 @@ public class StatusPedidoUseCase implements StatusPedidoInputPort {
     public StatusPedido consultarPorNome(String nome) {
         return statusPedidoOutputPort.consultarPorNome(nome).orElseThrow(() -> new StatusPedidoNotFound("StatusPedido com nome:" + nome + " não encontrado"));
     }
+
+    @Override
+    public StatusPedido consultar(Long id) {
+        return null;
+    }
+
+
 }

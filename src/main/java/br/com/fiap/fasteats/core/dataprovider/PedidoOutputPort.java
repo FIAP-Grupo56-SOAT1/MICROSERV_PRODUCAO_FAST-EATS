@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PedidoOutputPort {
 
-
+    Pedido salvarPedido(Pedido pedido);
 
     Optional<Pedido> consultarPedido(Long id);
 
@@ -16,5 +16,4 @@ public interface PedidoOutputPort {
     List<Pedido> listarPedidosAndamento();
 
     List<Pedido> consultarPedidoAndamento(Long id);
-
 }

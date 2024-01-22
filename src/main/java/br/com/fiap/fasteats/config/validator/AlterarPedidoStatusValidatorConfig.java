@@ -2,9 +2,9 @@ package br.com.fiap.fasteats.config.validator;
 
 import br.com.fiap.fasteats.core.usecase.impl.pedido.PedidoUseCase;
 import br.com.fiap.fasteats.core.usecase.impl.pedido.StatusPedidoUseCase;
-import br.com.fiap.fasteats.core.validator.impl.AlterarPedidoStatusValidatorImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import br.com.fiap.fasteats.core.validator.impl.AlterarPedidoStatusValidatorImpl;
 
 @Configuration
 public class AlterarPedidoStatusValidatorConfig {

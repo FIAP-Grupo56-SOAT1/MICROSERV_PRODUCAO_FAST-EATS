@@ -17,29 +17,17 @@ import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_P
 
 public class PedidoUseCase implements PedidoInputPort {
     private final PedidoOutputPort pedidoOutputPort;
-    private final ClienteInputPort clienteInputPort;
-    private final StatusPedidoInputPort statusPedidoInputPort;
     private final PagamentoOutputPort pagamentoOutputPort;
     private final PedidoValidator pedidoValidator;
 
-    public PedidoUseCase(PedidoOutputPort pedidoOutputPort, ClienteInputPort clienteInputPort,
-            StatusPedidoInputPort statusPedidoInputPort, PagamentoOutputPort pagamentoOutputPort,
-            PedidoValidator pedidoValidator) {
+    public PedidoUseCase(PedidoOutputPort pedidoOutputPort, PagamentoOutputPort pagamentoOutputPort, PedidoValidator pedidoValidator) {
         this.pedidoOutputPort = pedidoOutputPort;
-        this.clienteInputPort = clienteInputPort;
-        this.statusPedidoInputPort = statusPedidoInputPort;
+
         this.pagamentoOutputPort = pagamentoOutputPort;
         this.pedidoValidator = pedidoValidator;
     }
 
-    @Override
-    public Pedido criar(Pedido pedido) {
-        StatusPedido statusPedido = statusPedidoInputPort.consultarPorNome(STATUS_PEDIDO_CRIADO);
-        identificarCliente(pedido);
-        pedido.setStatusPedido(statusPedido.getId());
-        pedido.setDataHoraCriado(LocalDateTime.now());
-        return formatarPedido(pedidoOutputPort.salvarPedido(pedido));
-    }
+
 
     @Override
     public Pedido consultar(Long id) {
@@ -60,31 +48,9 @@ public class PedidoUseCase implements PedidoInputPort {
         return formatarPedido(pedidoOutputPort.salvarPedido(pedido));
     }
 
-    @Override
-    public void deletar(Long id) {
-        consultar(id);
-        pedidoOutputPort.deletar(id);
-    }
-
-    @Override
+        @Override
     public void atualizarValorPedido(Pedido pedido) {
         pedido.setValor(pedido.getProdutos().stream().mapToDouble(p -> p.getValor() * p.getQuantidade()).sum());
-    }
-
-    private void identificarCliente(Pedido pedido) {
-
-        if (!pedido.isIdentificaCliente()) {
-            pedido.setCliente(CLIENTE_SEM_IDENTIFICAR);
-            return;
-        }
-
-        if (Boolean.TRUE.equals(clienteInputPort.clienteExiste(pedido.getCliente().getCpf()))) {
-            pedido.setCliente(clienteInputPort.consultar(pedido.getCliente().getCpf()));
-            return;
-        }
-
-        Cliente clienteCriado = clienteInputPort.criar(pedido.getCliente());
-        pedido.setCliente(clienteCriado);
     }
 
     private Pedido formatarPedido(Pedido pedido) {

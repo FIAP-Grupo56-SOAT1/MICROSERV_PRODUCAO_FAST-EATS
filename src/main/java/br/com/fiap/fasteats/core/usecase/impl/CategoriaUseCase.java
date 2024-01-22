@@ -14,27 +14,11 @@ public class CategoriaUseCase implements CategoriaInputPort {
         this.categoriaOutputPort = categoriaOutputPort;
     }
 
-    @Override
-    public Categoria criar(Categoria categoria) {
-        categoria.setNome(categoria.getNome().toUpperCase());
-        return categoriaOutputPort.criar(categoria);
-    }
+
 
     @Override
     public Categoria consultar(Long id) {
         return categoriaOutputPort.consultar(id).orElseThrow(() -> new CategoriaNotFound("Categoria id: " + id + " não encontrada"));
-    }
-
-    @Override
-    public Categoria atualizar(Categoria categoria) {
-        if (categoria.getAtivo() == null) categoria.setAtivo(true);
-        categoria.setNome(categoria.getNome().toUpperCase());
-        return categoriaOutputPort.atualizar(categoria);
-    }
-
-    @Override
-    public void deletar(Long id) {
-        categoriaOutputPort.deletar(id);
     }
 
     @Override

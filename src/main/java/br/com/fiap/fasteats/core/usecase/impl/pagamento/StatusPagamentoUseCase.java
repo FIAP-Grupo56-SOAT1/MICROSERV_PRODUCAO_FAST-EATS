@@ -6,6 +6,7 @@ import br.com.fiap.fasteats.core.usecase.pagamento.StatusPagamentoInputPort;
 import br.com.fiap.fasteats.core.dataprovider.StatusPagamentoOutputPort;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StatusPagamentoUseCase implements StatusPagamentoInputPort {
 
@@ -21,7 +22,7 @@ public class StatusPagamentoUseCase implements StatusPagamentoInputPort {
     }
 
     @Override
-    public List<StatusPagamento> listar() {
+    public Optional<List<StatusPagamento>> listar() {
         return statusPagamentoOutputPort.listar();
     }
 

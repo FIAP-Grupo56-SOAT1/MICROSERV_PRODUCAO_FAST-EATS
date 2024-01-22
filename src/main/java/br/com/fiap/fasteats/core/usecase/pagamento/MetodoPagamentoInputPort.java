@@ -5,5 +5,4 @@ import br.com.fiap.fasteats.core.domain.model.Pedido;
 
 public interface MetodoPagamentoInputPort {
     Pagamento pix(Pedido pedido);
-    Pagamento mercadoPago(Pedido pedido);
 }

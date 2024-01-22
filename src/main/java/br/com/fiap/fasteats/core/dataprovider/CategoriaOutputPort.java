@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoriaOutputPort {
-
     Optional<Categoria> consultar(Long id);
     Optional<List<Categoria>> listar();
-
     Optional<Categoria> consultarPorNome(String nome);
 }

@@ -14,38 +14,20 @@ import java.util.Optional;
 
 public class ProdutoUseCase implements ProdutoInputPort {
     private final ProdutoOutputPort produtoOutputPort;
-    private final CategoriaOutputPort categoriaOutputPort;
 
-    public ProdutoUseCase(ProdutoOutputPort produtoOutputPort, CategoriaOutputPort categoriaOutputPort) {
+
+    public ProdutoUseCase(ProdutoOutputPort produtoOutputPort) {
         this.produtoOutputPort = produtoOutputPort;
-        this.categoriaOutputPort = categoriaOutputPort;
+
     }
 
-    @Override
-    public Produto criar(Produto produto) {
-        if (produto.getAtivo() == null) produto.setAtivo(true);
-        Produto produtoValidado = validarCategoria(produto);
-        if (Boolean.FALSE.equals(validarValor(produto.getValor()))) throw new ValidarValorException("Valor do produto inválido");
-        return produtoOutputPort.criar(produtoValidado);
-    }
+
 
     @Override
     public Produto consultar(Long id) {
         return produtoOutputPort.consultar(id).orElseThrow(() -> new ProdutoNotFound("Produto id: %d não encontrado".formatted(id)));
     }
 
-    @Override
-    public Produto atualizar(Produto produto) {
-        if (produto.getAtivo() == null) produto.setAtivo(true);
-        Produto produtoValidado = validarCategoria(produto);
-        if (Boolean.FALSE.equals(validarValor(produto.getValor()))) throw new ValidarValorException("Valor do produto inválido");
-        return produtoOutputPort.atualizar(produtoValidado);
-    }
-
-    @Override
-    public void deletar(Long id) {
-        produtoOutputPort.deletar(id);
-    }
 
     @Override
     public List<Produto> listar() {
@@ -62,12 +44,7 @@ public class ProdutoUseCase implements ProdutoInputPort {
         return produtoOutputPort.consultarPorCategoria(categoriaId).orElseThrow(() -> new ProdutoNotFound("Produto com categoria: %d não encontrado".formatted(categoriaId)));
     }
 
-    private Produto validarCategoria (Produto produto) {
-        Optional<Categoria> categoria = categoriaOutputPort.consultar(produto.getCategoria().getId());
-        if (categoria.isEmpty()) throw new CategoriaNotFound("Categoria id: " + produto.getCategoria().getId() + " não encontrada");
-        produto.setCategoria(categoria.get());
-        return produto;
-    }
+
 
     private Boolean validarValor(Double valor){
         return valor >= 0;

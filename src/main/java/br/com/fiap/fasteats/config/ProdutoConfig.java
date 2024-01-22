@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProdutoConfig {
     @Bean
-    public ProdutoUseCase crudProdutoUseCase(ProdutoAdapter crudProdutoAdapter, CategoriaAdapter crudCategoriaOutputPort) {
-        return new ProdutoUseCase(crudProdutoAdapter, crudCategoriaOutputPort);
+    public ProdutoUseCase crudProdutoUseCase(ProdutoAdapter crudProdutoAdapter) {
+        return new ProdutoUseCase(crudProdutoAdapter);
     }
 }
