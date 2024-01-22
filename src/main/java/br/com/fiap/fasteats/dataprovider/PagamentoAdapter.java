@@ -1,8 +1,11 @@
 package br.com.fiap.fasteats.dataprovider;
 
-import br.com.fiap.fasteats.dataprovider.repository.mapper.PagamentoEntityMapper;
-import br.com.fiap.fasteats.core.domain.model.Pagamento;
 import br.com.fiap.fasteats.core.dataprovider.PagamentoOutputPort;
+import br.com.fiap.fasteats.core.domain.model.Pagamento;
+import br.com.fiap.fasteats.dataprovider.client.PagamentoIntegration;
+import br.com.fiap.fasteats.dataprovider.client.mapper.PagamentoMapper;
+import br.com.fiap.fasteats.dataprovider.client.response.PagamentoResponse;
+import br.com.fiap.fasteats.dataprovider.repository.entity.PagamentoEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,74 +15,55 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class PagamentoAdapter implements PagamentoOutputPort {
-    private final PagamentoEntityMapper pagamentoEntityMapper;
+    private final PagamentoMapper pagamentoMapper;
+    private final PagamentoIntegration pagamentoIntegration;
 
     @Override
-    public List<Pagamento> listar() {
-        return null;
+    public Optional<List<Pagamento>> listar() {
+
+        Optional<List<PagamentoResponse>> pagamentoEntity = pagamentoIntegration.findAll();
+        return pagamentoEntity.map(pagamentoMapper::toPagamento);
     }
 
     @Override
     public Optional<Pagamento> consultar(Long id) {
-        return Optional.empty();
+
+        Optional<PagamentoResponse> pagamentoEntity = pagamentoIntegration.findById(id);
+
+        if (pagamentoEntity.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Pagamento pagamento = pagamentoMapper.toPagamento(pagamentoEntity.get());
+        return Optional.of(pagamento);
+
     }
 
     @Override
     public Optional<Pagamento> consultarPorPedidoId(long pedidoId) {
-        return Optional.empty();
+        Optional<PagamentoResponse> pagamentoEntity = pagamentoIntegration.findFirstByPedidoIdOrderByDataHoraCriadoDesc(pedidoId);
+        return pagamentoEntity.map(pagamentoMapper::toPagamento);
     }
 
     @Override
     public Pagamento salvarPagamento(Pagamento pagamento) {
-        return null;
+
+        PagamentoEntity pagamentoEntity = pagamentoMapper.toPagamentoEntity(pagamento);
+        PagamentoResponse pagamentoResponse = pagamentoIntegration.save(pagamentoEntity);
+        return pagamentoMapper.toPagamento(pagamentoResponse);
+
     }
 
     @Override
     public Pagamento atualizarPagamento(Pagamento pagamento) {
-        return null;
+        PagamentoEntity pagamentoEntity = pagamentoMapper.toPagamentoEntity(pagamento);
+        PagamentoResponse pagamentoResponse = pagamentoIntegration.saveAndFlush(pagamentoEntity);
+        return pagamentoMapper.toPagamento(pagamentoResponse);
     }
 
     @Override
     public Optional<Pagamento> consultarPorIdPagamentoExterno(Long idPagamentoExterno) {
-        return Optional.empty();
+        return pagamentoIntegration.findPagamentoByIdPagamentoExterno(idPagamentoExterno).map(pagamentoMapper::toPagamento);
     }
 
-//    @Override
-//    public List<Pagamento> listar() {
-//        var listPagamentos = pagamentoRepository.findAll();
-//        return listPagamentos
-//                .stream()
-//                .map(pagamentoEntityMapper::toPagamento)
-//                .toList();
-//    }
-//
-//    @Override
-//    public Optional<Pagamento> consultar(Long id) {
-//        return pagamentoRepository.findById(id).map(pagamentoEntityMapper::toPagamento);
-//    }
-//
-//    @Override
-//    public Optional<Pagamento> consultarPorPedidoId(long pedidoId) {
-//        return pagamentoRepository.findFirstByPedidoIdOrderByDataHoraCriadoDesc(pedidoId).map(pagamentoEntityMapper::toPagamento);
-//    }
-//
-//    @Override
-//    public Pagamento salvarPagamento(Pagamento pagamento) {
-//        var pagamentoEntity = pagamentoEntityMapper.toPagamentoEntity(pagamento);
-//        var pagamentoEntitySalvo = pagamentoRepository.save(pagamentoEntity);
-//        return pagamentoEntityMapper.toPagamento(pagamentoEntitySalvo);
-//    }
-//
-//    @Override
-//    public Pagamento atualizarPagamento(Pagamento pagamento) {
-//        var pagamentoEntity = pagamentoEntityMapper.toPagamentoEntity(pagamento);
-//        var pagamentoEntitySalvo = pagamentoRepository.saveAndFlush(pagamentoEntity);
-//        pagamentoRepository.flush();
-//        return pagamentoEntityMapper.toPagamento(pagamentoEntitySalvo);
-//    }
-//
-//    @Override
-//    public Optional<Pagamento> consultarPorIdPagamentoExterno(Long idPagamentoExterno) {
-//        return pagamentoRepository.findPagamentoByIdPagamentoExterno(idPagamentoExterno).map(pagamentoEntityMapper::toPagamento);
-//    }
 }

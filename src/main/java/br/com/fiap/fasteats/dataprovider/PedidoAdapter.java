@@ -1,9 +1,11 @@
 package br.com.fiap.fasteats.dataprovider;
 
-import br.com.fiap.fasteats.dataprovider.repository.entity.PedidoEntity;
-import br.com.fiap.fasteats.dataprovider.repository.mapper.PedidoEntityMapper;
-import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.core.dataprovider.PedidoOutputPort;
+import br.com.fiap.fasteats.core.domain.model.Pedido;
+import br.com.fiap.fasteats.dataprovider.client.PedidoIntegration;
+import br.com.fiap.fasteats.dataprovider.client.mapper.PedidoMapper;
+import br.com.fiap.fasteats.dataprovider.client.response.PedidoResponse;
+import br.com.fiap.fasteats.dataprovider.repository.entity.PedidoEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,63 +16,43 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PedidoAdapter implements PedidoOutputPort {
 
-    private final PedidoEntityMapper pedidoEntityMapper;
+    private final PedidoMapper pedidoEntityMapper;
+    private final PedidoIntegration pedidoIntegration;
+
 
     @Override
     public Pedido salvarPedido(Pedido pedido) {
-        return null;
+        PedidoEntity pedidoEntity = pedidoEntityMapper.toPedidoEntity(pedido);
+        PedidoResponse pedidoResponse = pedidoIntegration.saveAndFlush(pedidoEntity);
+        return pedidoEntityMapper.toPedido(pedidoResponse);
     }
 
     @Override
-    public Optional<Pedido> consultarPedido(Long id) {
-        return Optional.empty();
+    public Pedido consultarPedido(Long id) {
+        PedidoResponse pedidoEntity = pedidoIntegration.findById(id);
+        if (pedidoEntity == null) {
+            return null;
+        }
+        return  pedidoEntityMapper.toPedido(pedidoEntity);
     }
 
     @Override
     public List<Pedido> listar() {
-        return null;
-    }
-
-    @Override
-    public List<Pedido> listarPedidosAndamento() {
-        return null;
+        List<PedidoResponse> pedidosEntity = pedidoIntegration.findAll();
+        return pedidosEntity.stream().map(pedidoEntityMapper::toPedido).toList();
     }
 
     @Override
     public List<Pedido> consultarPedidoAndamento(Long id) {
-        return null;
+        List<PedidoResponse> pedidosEntity = pedidoIntegration.consultarPedidoAndamento(id);
+        return pedidosEntity.stream().map(pedidoEntityMapper::toPedido).toList();
     }
 
-
-//    @Override
-//    public Optional<Pedido> consultarPedido(Long id) {
-//        Optional<PedidoEntity> pedidoEntity = pedidoRepository.findById(id);
-//
-//        if (pedidoEntity.isEmpty()) {
-//            return Optional.empty();
-//        }
-//
-//        Pedido pedido = pedidoEntityMapper.toPedido(pedidoEntity.get());
-//        return Optional.of(pedido);
-//    }
-//
-//    @Override
-//    public List<Pedido> listar() {
-//        List<PedidoEntity> pedidosEntity = pedidoRepository.findAll();
-//        return pedidoEntityMapper.toPedidos(pedidosEntity);
-//    }
-//
-//    @Override
-//    public List<Pedido> consultarPedidoAndamento(Long id) {
-//        List<PedidoEntity> pedidosEntity = pedidoRepository.consultarPedidoAndamento(id);
-//        return pedidoEntityMapper.toPedidos(pedidosEntity);
-//    }
-//
-//    @Override
-//    public List<Pedido> listarPedidosAndamento() {
-//        List<PedidoEntity> pedidosEntity = pedidoRepository.listarPedidosAndamento();
-//        return pedidoEntityMapper.toPedidos(pedidosEntity);
-//    }
+    @Override
+    public List<Pedido> listarPedidosAndamento() {
+        List<PedidoResponse> pedidosEntity = pedidoIntegration.listarPedidosAndamento();
+        return pedidosEntity.stream().map(pedidoEntityMapper::toPedido).toList();
+    }
 
 
 }

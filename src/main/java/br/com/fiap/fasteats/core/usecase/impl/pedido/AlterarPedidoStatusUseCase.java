@@ -88,8 +88,11 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
     }
 
     private Pedido recuperarPedido(Long pedidoId) {
-        return pedidoOutputPort.consultarPedido(pedidoId)
-                .orElseThrow(() -> new PedidoNotFound("Pedido não encontrado id " + pedidoId));
+        var pedido =  pedidoOutputPort.consultarPedido(pedidoId);
+        if(pedido == null){
+            new PedidoNotFound("Pedido não encontrado id " + pedidoId);
+        }
+        return  pedido;
     }
 
     private Pedido atualizarStatusPedido(Pedido pedido, String novoStatusPedido) {

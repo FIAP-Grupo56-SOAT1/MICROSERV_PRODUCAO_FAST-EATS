@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PagamentoOutputPort {
-    List<Pagamento> listar();
+    Optional<List<Pagamento>> listar();
 
     Optional<Pagamento> consultar(Long id);
 

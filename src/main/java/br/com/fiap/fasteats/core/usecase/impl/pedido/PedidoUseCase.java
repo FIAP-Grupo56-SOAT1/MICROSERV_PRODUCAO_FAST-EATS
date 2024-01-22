@@ -4,16 +4,12 @@ import br.com.fiap.fasteats.core.dataprovider.PagamentoOutputPort;
 import br.com.fiap.fasteats.core.dataprovider.PedidoOutputPort;
 import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
 import br.com.fiap.fasteats.core.domain.model.*;
-import br.com.fiap.fasteats.core.usecase.ClienteInputPort;
 import br.com.fiap.fasteats.core.usecase.pedido.PedidoInputPort;
-import br.com.fiap.fasteats.core.usecase.pedido.StatusPedidoInputPort;
 import br.com.fiap.fasteats.core.validator.PedidoValidator;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
-import static br.com.fiap.fasteats.core.constants.ClienteConstants.CLIENTE_SEM_IDENTIFICAR;
-import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_CRIADO;
+import java.util.Optional;
 
 public class PedidoUseCase implements PedidoInputPort {
     private final PedidoOutputPort pedidoOutputPort;
@@ -31,14 +27,20 @@ public class PedidoUseCase implements PedidoInputPort {
 
     @Override
     public Pedido consultar(Long id) {
-        return formatarPedido(pedidoOutputPort.consultarPedido(id)
-                .orElseThrow(() -> new PedidoNotFound("Pedido não encontrado id " + id)));
+        var pedido =  formatarPedido(pedidoOutputPort.consultarPedido(id));
+        if(pedido == null){
+            new PedidoNotFound("Pedido não encontrado id " + id);
+        }
+        return  pedido;
     }
 
     @Override
     public List<Pedido> listar() {
         List<Pedido> pedidos = pedidoOutputPort.listar();
-        pedidos.forEach(this::formatarPedido);
+        if(pedidos.isEmpty()){
+            new ArrayList<Pedido>();
+        }
+
         return pedidos;
     }
 

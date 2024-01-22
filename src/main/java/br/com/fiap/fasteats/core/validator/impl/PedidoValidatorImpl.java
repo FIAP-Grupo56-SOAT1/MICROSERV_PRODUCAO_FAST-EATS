@@ -41,7 +41,10 @@ public class PedidoValidatorImpl implements PedidoValidator {
     }
 
     private void validarAtualizacaoDados(Pedido pedido) {
-        Pedido pedidoSalvo = pedidoOutputPort.consultarPedido(pedido.getId()).orElseThrow(() -> new RegraNegocioException("Pedido não encontrado"));
+        Pedido pedidoSalvo = pedidoOutputPort.consultarPedido(pedido.getId());
+
+        if(pedido == null)
+            new RegraNegocioException("Pedido não encontrado");
 
         if (pedido.isIdentificaCliente()) {
             throw new RegraNegocioException("Identificação do cliente não permitida após início do pedido");

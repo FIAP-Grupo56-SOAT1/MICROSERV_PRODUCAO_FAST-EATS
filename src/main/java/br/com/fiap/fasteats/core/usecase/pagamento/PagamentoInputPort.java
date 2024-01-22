@@ -3,9 +3,10 @@ package br.com.fiap.fasteats.core.usecase.pagamento;
 import br.com.fiap.fasteats.core.domain.model.Pagamento;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PagamentoInputPort {
-    List<Pagamento> listar();
+    Optional<List<Pagamento>> listar();
 
     Pagamento consultarPorIdPedido(Long idPedido);
 

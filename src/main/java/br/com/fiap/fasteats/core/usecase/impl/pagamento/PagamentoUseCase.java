@@ -9,6 +9,7 @@ import br.com.fiap.fasteats.core.validator.PagamentoValidator;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.fiap.fasteats.core.constants.StatusPagamentoConstants.STATUS_EM_PROCESSAMENTO;
 
@@ -24,7 +25,7 @@ public class PagamentoUseCase implements PagamentoInputPort {
     }
 
     @Override
-    public List<Pagamento> listar() {
+    public Optional<List<Pagamento>> listar() {
         return pagamentoOutputPort.listar();
     }
 

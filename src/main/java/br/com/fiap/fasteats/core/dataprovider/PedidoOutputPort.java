@@ -9,7 +9,7 @@ public interface PedidoOutputPort {
 
     Pedido salvarPedido(Pedido pedido);
 
-    Optional<Pedido> consultarPedido(Long id);
+    Pedido consultarPedido(Long id);
 
     List<Pedido> listar();
 
