@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 @Data
@@ -17,7 +18,21 @@ public class Cozinha {
 
     @Id
     private String CozinhaId;
-    private Date DataEntrada;
-    private Date DataSaida;
-    private Integer idPedido;
+    private LocalDate  DataEntrada;
+    private LocalDate DataSaida;
+    private Long idPedido;
+
+    private Long statusId;
+
+    public Cozinha(LocalDate dataEntrada,
+                   Long idPedido,
+                   Long statusId,
+                   String statusNome) {
+        DataEntrada = dataEntrada;
+        this.idPedido = idPedido;
+        this.statusId = statusId;
+        this.statusNome = statusNome;
+    }
+
+    private String statusNome;
 }
