@@ -1,18 +1,20 @@
 package br.com.fiap.fasteats.collection;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+
 @Data
 @Builder
 @Document(collection = "person")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Cozinha {
 
@@ -23,16 +25,9 @@ public class Cozinha {
     private Long idPedido;
 
     private Long statusId;
-
-    public Cozinha(LocalDate dataEntrada,
-                   Long idPedido,
-                   Long statusId,
-                   String statusNome) {
-        DataEntrada = dataEntrada;
-        this.idPedido = idPedido;
-        this.statusId = statusId;
-        this.statusNome = statusNome;
-    }
-
     private String statusNome;
+
+
+
+
 }

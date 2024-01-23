@@ -36,7 +36,7 @@ public class CozinhaPedidoController {
         Pedido pedidoAtualizado = cozinhaPedidoInputPort.iniciarPreparoPedido(idPedido);
         StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
         CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
-        Cozinha cozinha = new Cozinha(LocalDate.now(),idPedido,cozinhaPedidoResponse.getStatusId(),cozinhaPedidoResponse.getStatusNome());
+        Cozinha cozinha = new Cozinha(null,LocalDate.now(),LocalDate.now(),idPedido,cozinhaPedidoResponse.getStatusId(),cozinhaPedidoResponse.getStatusNome());
         return ResponseEntity.ok().body(cozinha);
     }
 

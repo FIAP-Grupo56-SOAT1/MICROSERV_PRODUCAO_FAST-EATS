@@ -1,6 +1,5 @@
 package br.com.fiap.fasteats.core.usecase.impl.pedido;
 
-import br.com.fiap.fasteats.core.dataprovider.PagamentoOutputPort;
 import br.com.fiap.fasteats.core.dataprovider.PedidoOutputPort;
 import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
 import br.com.fiap.fasteats.core.domain.model.Pedido;
@@ -16,16 +15,14 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
     private final AlterarPedidoStatusValidator alterarPedidoStatusValidator;
     private final StatusPedidoInputPort statusPedidoInputPort;
     private final PedidoOutputPort pedidoOutputPort;
-    private final PagamentoOutputPort pagamentoOutputPort;
 
     public AlterarPedidoStatusUseCase(AlterarPedidoStatusValidator alterarPedidoStatusValidator,
             StatusPedidoInputPort statusPedidoInputPort,
-            PedidoOutputPort pedidoOutputPort,
-            PagamentoOutputPort pagamentoOutputPort) {
+            PedidoOutputPort pedidoOutputPort) {
         this.alterarPedidoStatusValidator = alterarPedidoStatusValidator;
         this.statusPedidoInputPort = statusPedidoInputPort;
         this.pedidoOutputPort = pedidoOutputPort;
-        this.pagamentoOutputPort = pagamentoOutputPort;
+
     }
 
     @Override
