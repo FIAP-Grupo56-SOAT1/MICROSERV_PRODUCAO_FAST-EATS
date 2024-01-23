@@ -58,4 +58,13 @@ public class CozinhaPedidoController {
         CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
+
+    @PatchMapping("{idPedido}/receber-pedido")
+    @Operation(summary = "Receber pedido", description = "Receber o pedido.")
+    public ResponseEntity<CozinhaPedidoResponse> receberPedido(@PathVariable final Long idPedido) {
+        Pedido pedidoAtualizado = cozinhaPedidoInputPort.receberPedido(idPedido);
+        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
+        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
+        return ResponseEntity.ok().body(cozinhaPedidoResponse);
+    }
 }
