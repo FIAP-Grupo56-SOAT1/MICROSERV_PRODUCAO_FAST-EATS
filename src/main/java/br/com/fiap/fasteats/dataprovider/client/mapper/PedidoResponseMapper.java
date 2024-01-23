@@ -8,9 +8,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface PedidoMapper {
+public interface PedidoResponseMapper {
     Pedido toPedido(PedidoResponse pedidoResponse);
-    List<Pedido> toPedido(List<PedidoResponse> pedidoResponseList);
-
     PedidoEntity toPedidoEntity(Pedido pedido);
 }

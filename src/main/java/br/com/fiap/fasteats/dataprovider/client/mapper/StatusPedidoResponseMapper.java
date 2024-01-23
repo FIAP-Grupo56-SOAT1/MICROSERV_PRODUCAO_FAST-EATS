@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface StatusPedidoMapper {
+public interface StatusPedidoResponseMapper {
     StatusPedido toStatusPedido(StatusPedidoResponse statusPedidoResponse);
     List<StatusPedido> toStatusPedidoList(List<StatusPedidoResponse> statusPedidoResponseList);
 }

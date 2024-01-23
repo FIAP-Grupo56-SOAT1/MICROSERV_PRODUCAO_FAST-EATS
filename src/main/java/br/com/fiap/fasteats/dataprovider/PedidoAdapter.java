@@ -3,7 +3,7 @@ package br.com.fiap.fasteats.dataprovider;
 import br.com.fiap.fasteats.core.dataprovider.PedidoOutputPort;
 import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.dataprovider.client.PedidoIntegration;
-import br.com.fiap.fasteats.dataprovider.client.mapper.PedidoMapper;
+import br.com.fiap.fasteats.dataprovider.client.mapper.PedidoResponseMapper;
 import br.com.fiap.fasteats.dataprovider.client.response.PedidoResponse;
 import br.com.fiap.fasteats.dataprovider.repository.entity.PedidoEntity;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +16,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PedidoAdapter implements PedidoOutputPort {
 
-    private final PedidoMapper pedidoEntityMapper;
+    private final PedidoResponseMapper pedidoMapper;
     private final PedidoIntegration pedidoIntegration;
 
 
     @Override
     public Pedido salvarPedido(Pedido pedido) {
-        PedidoEntity pedidoEntity = pedidoEntityMapper.toPedidoEntity(pedido);
+        PedidoEntity pedidoEntity = pedidoMapper.toPedidoEntity(pedido);
         PedidoResponse pedidoResponse = pedidoIntegration.saveAndFlush(pedidoEntity);
-        return pedidoEntityMapper.toPedido(pedidoResponse);
+        return pedidoMapper.toPedido(pedidoResponse);
     }
 
     @Override
@@ -33,25 +33,25 @@ public class PedidoAdapter implements PedidoOutputPort {
         if (pedidoEntity == null) {
             return null;
         }
-        return  pedidoEntityMapper.toPedido(pedidoEntity);
+        return  pedidoMapper.toPedido(pedidoEntity);
     }
 
     @Override
     public List<Pedido> listar() {
         List<PedidoResponse> pedidosEntity = pedidoIntegration.findAll();
-        return pedidosEntity.stream().map(pedidoEntityMapper::toPedido).toList();
+        return pedidosEntity.stream().map(pedidoMapper::toPedido).toList();
     }
 
     @Override
     public List<Pedido> consultarPedidoAndamento(Long id) {
         List<PedidoResponse> pedidosEntity = pedidoIntegration.consultarPedidoAndamento(id);
-        return pedidosEntity.stream().map(pedidoEntityMapper::toPedido).toList();
+        return pedidosEntity.stream().map(pedidoMapper::toPedido).toList();
     }
 
     @Override
     public List<Pedido> listarPedidosAndamento() {
         List<PedidoResponse> pedidosEntity = pedidoIntegration.listarPedidosAndamento();
-        return pedidosEntity.stream().map(pedidoEntityMapper::toPedido).toList();
+        return pedidosEntity.stream().map(pedidoMapper::toPedido).toList();
     }
 
 

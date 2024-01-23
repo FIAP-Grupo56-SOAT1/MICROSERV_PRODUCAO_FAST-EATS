@@ -4,7 +4,7 @@ import br.com.fiap.fasteats.core.dataprovider.StatusPagamentoOutputPort;
 import br.com.fiap.fasteats.core.domain.exception.StatusPedidoNotFound;
 import br.com.fiap.fasteats.core.domain.model.StatusPagamento;
 import br.com.fiap.fasteats.dataprovider.client.StatusPagamentoIntegration;
-import br.com.fiap.fasteats.dataprovider.client.mapper.StatusPagamentoMapper;
+import br.com.fiap.fasteats.dataprovider.client.mapper.StatusPagamentoResponseMapper;
 import br.com.fiap.fasteats.dataprovider.client.response.StatusPagamentoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StatusPagamentoAdapter implements StatusPagamentoOutputPort {
     private final StatusPagamentoIntegration statusPagamentoIntegration;
-    private final StatusPagamentoMapper statusPagamentoMapper;
+    private final StatusPagamentoResponseMapper statusPagamentoMapper;
 
     @Override
     public Optional<StatusPagamento> consultar(Long id) {

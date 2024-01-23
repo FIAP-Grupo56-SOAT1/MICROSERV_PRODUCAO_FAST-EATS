@@ -4,7 +4,7 @@ import br.com.fiap.fasteats.core.dataprovider.StatusPedidoOutputPort;
 import br.com.fiap.fasteats.core.domain.exception.StatusPedidoNotFound;
 import br.com.fiap.fasteats.core.domain.model.StatusPedido;
 import br.com.fiap.fasteats.dataprovider.client.StatusPedidoIntegration;
-import br.com.fiap.fasteats.dataprovider.client.mapper.StatusPedidoMapper;
+import br.com.fiap.fasteats.dataprovider.client.mapper.StatusPedidoResponseMapper;
 import br.com.fiap.fasteats.dataprovider.client.response.StatusPedidoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StatusPedidoAdapter implements StatusPedidoOutputPort {
     private final StatusPedidoIntegration statusPedidoIntegration;
-    private final StatusPedidoMapper statusPedidoMapper;
+    private final StatusPedidoResponseMapper statusPedidoMapper;
 
 
     @Override
