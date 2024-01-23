@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@Document(collection = "person")
+@Document(collection = "cozinha")
 @Getter
 @Setter
 @NoArgsConstructor
