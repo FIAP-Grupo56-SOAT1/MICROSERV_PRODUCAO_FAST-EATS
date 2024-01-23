@@ -27,17 +27,18 @@ public class CozinhaPedidoController {
     private final StatusPedidoInputPort statusPedidoInputPort;
     private final CozinhaPedidoInputPort cozinhaPedidoInputPort;
 
-    @Autowired
-    private CozinhaService cozinhaService;
+//    @Autowired
+//    private CozinhaService cozinhaService;
 
     @PatchMapping("{idPedido}/iniciar-preparo")
     @Operation(summary = "Iniciar preparo", description = "Inicia o preparo de um pedido.")
-    public ResponseEntity<Cozinha> iniciarPreparo(@PathVariable final Long idPedido) {
+    public ResponseEntity<CozinhaPedidoResponse> iniciarPreparo(@PathVariable final Long idPedido) {
         Pedido pedidoAtualizado = cozinhaPedidoInputPort.iniciarPreparoPedido(idPedido);
         StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
         CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
-        Cozinha cozinha = new Cozinha(null,LocalDate.now(),LocalDate.now(),idPedido,cozinhaPedidoResponse.getStatusId(),cozinhaPedidoResponse.getStatusNome());
-        return ResponseEntity.ok().body(cozinha);
+//        Cozinha cozinha = new Cozinha(null,LocalDate.now(),LocalDate.now(),idPedido,cozinhaPedidoResponse.getStatusId(),cozinhaPedidoResponse.getStatusNome());
+//        cozinhaService.save(cozinha);
+        return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
 
     @PatchMapping("{idPedido}/finalizar-preparo")

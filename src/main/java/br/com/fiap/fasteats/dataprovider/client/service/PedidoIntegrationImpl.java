@@ -4,7 +4,6 @@ import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
 import br.com.fiap.fasteats.core.domain.exception.StatusPedidoNotFound;
 import br.com.fiap.fasteats.dataprovider.client.PedidoIntegration;
 import br.com.fiap.fasteats.dataprovider.client.response.PedidoResponse;
-import br.com.fiap.fasteats.dataprovider.client.response.StatusPagamentoResponse;
 import br.com.fiap.fasteats.dataprovider.repository.entity.PedidoEntity;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
