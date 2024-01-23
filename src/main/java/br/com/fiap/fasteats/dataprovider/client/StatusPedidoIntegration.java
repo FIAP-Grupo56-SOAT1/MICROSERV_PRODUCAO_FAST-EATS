@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface StatusPedidoIntegration {
     Optional<StatusPedidoResponse> consultar(Long id);
-
     Optional<List<StatusPedidoResponse>> listar();
-
     Optional<StatusPedidoResponse> consultarPorNome(String nome);
 }

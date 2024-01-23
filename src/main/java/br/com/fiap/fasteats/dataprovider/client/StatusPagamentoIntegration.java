@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface StatusPagamentoIntegration {
     Optional<StatusPagamentoResponse> consultar(Long id);
-
     Optional<List<StatusPagamentoResponse>> listar();
-
     Optional<StatusPagamentoResponse> consultarPorNome(String nome);
 }
