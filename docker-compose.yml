@@ -6,41 +6,31 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - fiap-net
+      - fiap-net-cozinha
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/fasteatsdb?allowPublicKeyRetrieval=true
-      - spring.datasource.username=${DB_USER}
-      - spring.datasource.password=${DB_PASSWORD}
-      - spring.flyway.url=jdbc:mysql://mysqldb:3306/fasteatsdb
-      - spring.flyway.user=${DB_USER}
-      - spring.flyway.password=${DB_PASSWORD}
-      - spring.flyway.baseline-on-migrate=true
-      - spring.flyway.locations=classpath:db/migration
+      - spring.data.mongodb.authentication-database:'admin'
+      - spring.data.mongodb.username='sa'
+      - spring.data.mongodb.password='teste@123'
+      - spring.data.mongodb.database='fasteatsdb_cozinha'
+      - spring.data.mongodb.port=27017
+      - spring.data.mongodb.host='localhost'
     volumes:
       - .m2:/root/.m2
     depends_on:
-      mysqldb:
+      mongoDb:
         condition: service_healthy
 
-  mysqldb:
-    image: "mysql:8.0"
+  mongoDb:
+    image: "mongo"
     restart: always
     ports:
-      - "3306:3306"
+      - "27017:27017"
     expose:
-      - "3306"
+      - "27017"
     networks:
-      - fiap-net
+      - fiap-net-cozinha
     environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-    healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
-      start_period: 5s
-      interval: 5s
-      timeout: 5s
-      retries: 55
+      MONGO_INITDB_ROOT_USERNAME: 'sa'
+      MONGO_INITDB_ROOT_PASSWORD: 'teste@123'
 networks:
-  fiap-net:
+  fiap-net-cozinha:
