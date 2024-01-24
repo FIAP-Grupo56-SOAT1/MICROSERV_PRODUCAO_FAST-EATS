@@ -54,8 +54,6 @@ public class PedidoValidatorImpl implements PedidoValidator {
             throw new RegraNegocioException("Data e hora da criação do Pedido não pode ser alterada");
         }
 
-        if (pedidoSalvo.getCliente() != null && (!pedidoSalvo.getCliente().getCpf().equals(pedido.getCliente().getCpf()))) {
-            throw new RegraNegocioException("O Cliente informado no Pedido não pode ser alterado");
-        }
+
     }
 }

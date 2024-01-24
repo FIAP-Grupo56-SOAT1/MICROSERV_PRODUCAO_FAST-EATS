@@ -9,8 +9,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface GerenciarPedidoMapper {
-    @Mapping(source = "nomeStatusPedido", target = "statusPedido")
     GerenciarPedidoResponse toGerenciarPedidoResponse(Pedido pedido);
-
     List<GerenciarPedidoResponse> toGerenciarPedidosResponse(List<Pedido> pedidos);
 }

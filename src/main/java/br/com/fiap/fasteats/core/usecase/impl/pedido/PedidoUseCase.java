@@ -47,7 +47,7 @@ public class PedidoUseCase implements PedidoInputPort {
 
         @Override
     public void atualizarValorPedido(Pedido pedido) {
-        pedido.setValor(pedido.getProdutos().stream().mapToDouble(p -> p.getValor() * p.getQuantidade()).sum());
+
     }
 
     private Pedido formatarPedido(Pedido pedido) {
