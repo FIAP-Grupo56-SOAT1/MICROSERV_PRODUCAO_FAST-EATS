@@ -12,13 +12,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
+import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_EM_PREPARO;
+
+
+import java.util.List;
 @RestController
 @RequestMapping("cozinha-pedido")
 @RequiredArgsConstructor
@@ -29,6 +32,8 @@ public class CozinhaPedidoController {
 
     @Autowired
     private CozinhaService cozinhaService;
+
+
 
     @PatchMapping("{idPedido}/iniciar-preparo")
     @Operation(summary = "Iniciar preparo", description = "Inicia o preparo de um pedido.")
@@ -66,5 +71,26 @@ public class CozinhaPedidoController {
         StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
         CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
+    }
+
+
+    @GetMapping("incluirCozinha")
+    public ResponseEntity<ArrayList<Cozinha>> incluirCozinha() {
+        ArrayList<Cozinha> listCozinha = new ArrayList<Cozinha>();
+        Integer y = 1;
+        for (int i = 0; i < 100 ; i++) {
+            Cozinha cozinha = new Cozinha(null,LocalDate.now(),LocalDate.now(),y.longValue(),y.longValue(),STATUS_PEDIDO_EM_PREPARO);
+
+            cozinhaService.save(cozinha);
+            listCozinha.add(cozinha);
+        }
+        return ResponseEntity.ok().body(listCozinha);
+    }
+
+
+    @GetMapping("getAll")
+    public ResponseEntity<List<Cozinha>> getAlll() {
+        var listConzinha = cozinhaService.findAll();
+        return ResponseEntity.ok().body(listConzinha);
     }
 }
