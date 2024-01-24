@@ -3,11 +3,13 @@ package br.com.fiap.fasteats.service.Impl;
 import br.com.fiap.fasteats.collection.Cozinha;
 import br.com.fiap.fasteats.dataprovider.repository.CozinhaRepository;
 import br.com.fiap.fasteats.service.CozinhaService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CozinhaServiceImpl implements CozinhaService {
@@ -32,8 +34,13 @@ public class CozinhaServiceImpl implements CozinhaService {
     }
 
     @Override
-    public List<Cozinha> findAllByPedidoId(Long idPedido) {
+    public List<Cozinha> findByIdPedidoWith(Long idPedido) {
         return null;
+    }
+
+    @Override
+    public Optional<Cozinha> findById(String cozinhaId) {
+        return cozinhaRepository.findById(cozinhaId);
     }
 
 

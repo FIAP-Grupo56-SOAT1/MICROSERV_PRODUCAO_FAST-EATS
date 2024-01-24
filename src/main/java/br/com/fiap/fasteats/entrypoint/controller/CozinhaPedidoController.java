@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -22,6 +21,8 @@ import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_P
 
 
 import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("cozinha-pedido")
 @RequiredArgsConstructor
@@ -92,5 +93,11 @@ public class CozinhaPedidoController {
     public ResponseEntity<List<Cozinha>> getAlll() {
         var listConzinha = cozinhaService.findAll();
         return ResponseEntity.ok().body(listConzinha);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Cozinha>> findById(@PathVariable String id) {
+        Optional<Cozinha> cozinha = cozinhaService.findById(id);
+        return ResponseEntity.ok().body(cozinha);
     }
 }

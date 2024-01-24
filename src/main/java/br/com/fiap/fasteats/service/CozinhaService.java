@@ -3,6 +3,7 @@ package br.com.fiap.fasteats.service;
 import br.com.fiap.fasteats.collection.Cozinha;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CozinhaService {
 
@@ -12,6 +13,8 @@ public interface CozinhaService {
 
     void deleteById(String id);
 
-    List<Cozinha> findAllByPedidoId(Long idPedido);
+    List<Cozinha> findByIdPedidoWith(Long idPedido);
+
+    Optional<Cozinha> findById(String cozinhaId);
 
 }
