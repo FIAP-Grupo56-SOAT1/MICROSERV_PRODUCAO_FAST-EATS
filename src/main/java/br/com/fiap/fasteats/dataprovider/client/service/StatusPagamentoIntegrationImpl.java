@@ -22,10 +22,10 @@ public class StatusPagamentoIntegrationImpl implements StatusPagamentoIntegratio
 
     private final RestTemplate restTemplate;
 
-    @Value("${URL_PEDIDO_SERVICE}")
+    @Value("${URL_PAGAMENTO_SERVICE}")
     private String URL_BASE;
 
-    private final String PATH = "/status-pedidos";
+    private final String PATH = "/status-pagamento";
 
     @Override
     public Optional<StatusPagamentoResponse> consultar(Long id) {

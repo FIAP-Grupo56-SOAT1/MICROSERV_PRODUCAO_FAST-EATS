@@ -36,7 +36,7 @@ public class StatusPedidoIntegrationImpl implements StatusPedidoIntegration {
             return Optional.ofNullable(statusPedidoResponse);
         } catch (Exception ex) {
             logger.error("Erro retorno microservice pedido ", ex.getCause());
-            throw new StatusPedidoNotFound("Erro retorno microservice pedido " + ex.getMessage());
+            throw new StatusPedidoNotFound("Erro retorno microservice status pedido " + ex.getMessage());
         }
     }
 
@@ -65,7 +65,7 @@ public class StatusPedidoIntegrationImpl implements StatusPedidoIntegration {
         } catch (Exception ex) {
             // Log detalhado para investigar o problema
             logger.error("Erro ao obter dados do microservice de pedido ", ex);
-            throw new StatusPedidoNotFound("Erro ao obter dados do microservice de pedido: " + ex.getMessage());
+            throw new StatusPedidoNotFound("Erro ao obter dados do microservice de status pedido: " + ex.getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ public class StatusPedidoIntegrationImpl implements StatusPedidoIntegration {
             return Optional.ofNullable(statusPedidoResponse);
         } catch (Exception ex) {
             logger.error("Erro retorno microservice pedido ", ex.getCause());
-            throw new StatusPedidoNotFound("Erro retorno microservice pedido " + ex.getMessage());
+            throw new StatusPedidoNotFound("Erro retorno microservice status pedido " + ex.getMessage());
         }
     }
 }
