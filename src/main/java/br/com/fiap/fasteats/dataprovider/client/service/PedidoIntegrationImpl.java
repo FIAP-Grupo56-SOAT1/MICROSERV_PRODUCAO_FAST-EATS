@@ -35,7 +35,7 @@ public class PedidoIntegrationImpl implements PedidoIntegration {
             PedidoResponse pedidoResponse =
                     restTemplate.getForObject(URL_BASE + URI + "/{id}", PedidoResponse.class, id);
 
-            return null;
+            return pedidoResponse;
         } catch (Exception ex) {
             logger.error("Erro retorno microservice pedido ", ex.getCause());
             throw new PedidoNotFound("Erro retorno microservice pedido " + ex.getMessage());
