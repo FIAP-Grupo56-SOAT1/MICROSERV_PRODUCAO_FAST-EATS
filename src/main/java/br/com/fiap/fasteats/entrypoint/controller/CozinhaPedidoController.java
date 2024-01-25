@@ -100,4 +100,9 @@ public class CozinhaPedidoController {
         Optional<Cozinha> cozinha = cozinhaService.findById(id);
         return ResponseEntity.ok().body(cozinha);
     }
+
+
+
+
+
 }
