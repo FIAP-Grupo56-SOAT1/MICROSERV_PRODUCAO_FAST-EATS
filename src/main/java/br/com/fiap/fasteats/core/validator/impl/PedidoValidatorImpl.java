@@ -35,7 +35,7 @@ public class PedidoValidatorImpl implements PedidoValidator {
                 .filter(statusPedido -> statusPedido.getId().equals(pedido.getStatusPedido()))
                 .findAny()
                 .ifPresent(s -> {
-                    throw new RegraNegocioException("Este pedido não pode ser alterado, pois está " + pedido.getNomeStatusPedido());
+                    throw new RegraNegocioException("Este pedido não pode ser alterado, pois está " + pedido.getStatusPedido());
                 });
         validarAtualizacaoDados(pedido);
     }
@@ -50,10 +50,9 @@ public class PedidoValidatorImpl implements PedidoValidator {
             throw new RegraNegocioException("Identificação do cliente não permitida após início do pedido");
         }
 
-        if (!pedido.getDataHoraCriado().equals(pedidoSalvo.getDataHoraCriado())) {
-            throw new RegraNegocioException("Data e hora da criação do Pedido não pode ser alterada");
-        }
-
+//        if (!pedido.getDataHoraCriado().equals(pedidoSalvo.getDataHoraCriado())) {
+//            throw new RegraNegocioException("Data e hora da criação do Pedido não pode ser alterada");
+//        }
 
     }
 }

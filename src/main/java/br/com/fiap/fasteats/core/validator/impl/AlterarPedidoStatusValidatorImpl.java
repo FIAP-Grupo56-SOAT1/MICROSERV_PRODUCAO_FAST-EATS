@@ -64,6 +64,6 @@ public class AlterarPedidoStatusValidatorImpl implements AlterarPedidoStatusVali
     }
 
     private String recuperarNomeStatusPedido(Pedido pedido) {
-        return statusPedidoInputPort.consultar(pedido.getStatusPedido()).getNome();
+        return statusPedidoInputPort.consultar(pedido.getStatusPedidoId()).getNome();
     }
 }

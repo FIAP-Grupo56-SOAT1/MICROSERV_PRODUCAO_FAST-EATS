@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface CozinhaRepository extends MongoRepository<Cozinha,String>{
-    //List<Cozinha> findByIdPedidoWith(Long idPedido);
+    public Cozinha findByIdPedido(Long idPedido);
 }

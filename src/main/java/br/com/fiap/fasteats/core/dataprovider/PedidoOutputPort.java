@@ -16,4 +16,14 @@ public interface PedidoOutputPort {
     List<Pedido> listarPedidosAndamento();
 
     List<Pedido> consultarPedidoAndamento(Long id);
+
+    Pedido atualizarStatus(Pedido pedido);
+
+    Pedido cancelaPedido(Pedido pedidoAtualizado);
+
+    Pedido finalizarPedido(Pedido pedidoAtualizado);
+
+    Pedido pronto(Pedido pedidoAtualizado);
+
+    Pedido recebido(Pedido pedidoAtualizado);
 }

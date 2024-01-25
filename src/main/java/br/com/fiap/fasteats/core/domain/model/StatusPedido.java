@@ -2,6 +2,8 @@ package br.com.fiap.fasteats.core.domain.model;
 
 import java.util.Objects;
 
+
+
 public class StatusPedido {
     private Long id;
     private String nome;

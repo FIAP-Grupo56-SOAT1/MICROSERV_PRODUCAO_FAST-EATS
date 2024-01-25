@@ -1,5 +1,6 @@
 package br.com.fiap.fasteats.dataprovider.client;
 
+import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.dataprovider.client.response.PedidoResponse;
 import br.com.fiap.fasteats.dataprovider.repository.entity.PedidoEntity;
 
@@ -14,4 +15,12 @@ public interface PedidoIntegration {
     List<PedidoResponse> consultarPedidoAndamento(Long id);
     List<PedidoResponse> listarPedidosAndamento();
     PedidoResponse saveAndFlush(PedidoEntity pedidoEntity);
+
+    void cancelaPedido(Long id);
+
+    void finalizarPedido(Long id);
+
+    void pronto(Long id);
+
+    void recebido(Long id);
 }

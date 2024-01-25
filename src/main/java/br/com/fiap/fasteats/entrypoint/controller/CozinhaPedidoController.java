@@ -34,16 +34,23 @@ public class CozinhaPedidoController {
     @Autowired
     private CozinhaService cozinhaService;
 
-
+    @PostMapping("{idPedido}/receber-pedido")
+    @Operation(summary = "Receber pedido", description = "Receber o pedido.")
+    public ResponseEntity<CozinhaPedidoResponse> receberPedido(@PathVariable final Long idPedido) {
+        Pedido pedidoAtualizado = cozinhaPedidoInputPort.receberPedido(idPedido);
+        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
+        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
+        cozinhaService.receberPedido(idPedido, cozinhaPedidoResponse);
+        return ResponseEntity.ok().body(cozinhaPedidoResponse);
+    }
 
     @PatchMapping("{idPedido}/iniciar-preparo")
     @Operation(summary = "Iniciar preparo", description = "Inicia o preparo de um pedido.")
     public ResponseEntity<CozinhaPedidoResponse> iniciarPreparo(@PathVariable final Long idPedido) {
         Pedido pedidoAtualizado = cozinhaPedidoInputPort.iniciarPreparoPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
-        Cozinha cozinha = new Cozinha(null,LocalDate.now(),LocalDate.now(),idPedido,cozinhaPedidoResponse.getStatusId(),cozinhaPedidoResponse.getStatusNome());
-        cozinhaService.save(cozinha);
+        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
+        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
+        cozinhaService.iniciarPreparo(idPedido, cozinhaPedidoResponse);
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
 
@@ -51,8 +58,9 @@ public class CozinhaPedidoController {
     @Operation(summary = "Finalizar preparo", description = "Finaliza o preparo de pedido.")
     public ResponseEntity<CozinhaPedidoResponse> finalizarPreparo(@PathVariable final Long idPedido) {
         Pedido pedidoAtualizado = cozinhaPedidoInputPort.finalizarPreparoPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
+        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
+        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
+        cozinhaService.finalizarPreparo(idPedido, cozinhaPedidoResponse);
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
 
@@ -60,34 +68,11 @@ public class CozinhaPedidoController {
     @Operation(summary = "Entregar pedido", description = "Realiza a entrega do pedido.")
     public ResponseEntity<CozinhaPedidoResponse> retirarPedido(@PathVariable final Long idPedido) {
         Pedido pedidoAtualizado = cozinhaPedidoInputPort.retirarPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
+        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
+        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
+        cozinhaService.entregarPedido(idPedido, cozinhaPedidoResponse);
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
-
-    @PatchMapping("{idPedido}/receber-pedido")
-    @Operation(summary = "Receber pedido", description = "Receber o pedido.")
-    public ResponseEntity<CozinhaPedidoResponse> receberPedido(@PathVariable final Long idPedido) {
-        Pedido pedidoAtualizado = cozinhaPedidoInputPort.receberPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedido());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedido(), statusPedido.getNome());
-        return ResponseEntity.ok().body(cozinhaPedidoResponse);
-    }
-
-
-    @GetMapping("incluirCozinha")
-    public ResponseEntity<ArrayList<Cozinha>> incluirCozinha() {
-        ArrayList<Cozinha> listCozinha = new ArrayList<Cozinha>();
-        Integer y = 1;
-        for (int i = 0; i < 100 ; i++) {
-            Cozinha cozinha = new Cozinha(null,LocalDate.now(),LocalDate.now(),y.longValue(),y.longValue(),STATUS_PEDIDO_EM_PREPARO);
-
-            cozinhaService.save(cozinha);
-            listCozinha.add(cozinha);
-        }
-        return ResponseEntity.ok().body(listCozinha);
-    }
-
 
     @GetMapping("getAll")
     public ResponseEntity<List<Cozinha>> getAlll() {
@@ -95,14 +80,9 @@ public class CozinhaPedidoController {
         return ResponseEntity.ok().body(listConzinha);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<Cozinha>> findById(@PathVariable String id) {
-        Optional<Cozinha> cozinha = cozinhaService.findById(id);
+    @GetMapping("{idPedido}")
+    public ResponseEntity<Cozinha> getAlll(@RequestParam("idPedido") Long idPedido) {
+        var cozinha = cozinhaService.findByIdPedidoId(idPedido);
         return ResponseEntity.ok().body(cozinha);
     }
-
-
-
-
-
 }

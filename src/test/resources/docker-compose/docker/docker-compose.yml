@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mysqldb-fasteatspedido:
+    container_name: mongo-fasteatspedido
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sa
+      MONGO_INITDB_ROOT_PASSWORD: teste@123
+    networks:
+      fasteats-net:
+    ports:
+      - '27017:27017'
+    expose:
+      - '27017'
+networks:
+  fasteats-net:

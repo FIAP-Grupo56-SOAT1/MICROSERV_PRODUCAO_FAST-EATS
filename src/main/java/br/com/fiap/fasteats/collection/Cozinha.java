@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -23,11 +24,16 @@ public class Cozinha {
     @Id
     @MongoId(value = FieldType.OBJECT_ID)
     private String cozinhaId;
-    private LocalDate  dataEntrada;
-    private LocalDate dataSaida;
+
+    private LocalDateTime dataRecebimentoDoPedido;
+    private LocalDateTime dataInicioPreparo;
+    private LocalDateTime dataFinalizacaoPreparo;
+    private LocalDateTime dataEntregaPedido;
+
     private Long idPedido;
 
-    private Long statusId;
-    private String statusNome;
+    private Long statusPedidoId;
+    private String statusPedido;
 
+    public String processoAtual;
 }

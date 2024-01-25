@@ -30,7 +30,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
         Pedido pedido = recuperarPedido(pedidoId);
         alterarPedidoStatusValidator.validarAguardandoPagamento(pedidoId);
         Pedido pedidoAtualizado = atualizarStatusPedido(pedido, STATUS_PEDIDO_AGUARDANDO_PAGAMENTO);
-        return pedidoOutputPort.salvarPedido(pedidoAtualizado);
+        pedidoOutputPort.atualizarStatus(pedidoAtualizado);
+        return recuperarPedido(pedidoId);
     }
 
     @Override
@@ -38,7 +39,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
         Pedido pedido = recuperarPedido(pedidoId);
         alterarPedidoStatusValidator.validarPago(pedidoId);
         Pedido pedidoAtualizado = atualizarStatusPedido(pedido, STATUS_PEDIDO_PAGO);
-        return pedidoOutputPort.salvarPedido(pedidoAtualizado);
+        pedidoOutputPort.atualizarStatus(pedidoAtualizado);
+        return recuperarPedido(pedidoId);
     }
 
     @Override
@@ -46,8 +48,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
         Pedido pedido = recuperarPedido(pedidoId);
         alterarPedidoStatusValidator.validarRecebido(pedidoId);
         Pedido pedidoAtualizado = atualizarStatusPedido(pedido, STATUS_PEDIDO_RECEBIDO);
-        pedidoAtualizado.setDataHoraRecebimento(LocalDateTime.now());
-        return pedidoOutputPort.salvarPedido(pedidoAtualizado);
+        pedidoOutputPort.recebido(pedidoAtualizado);
+        return recuperarPedido(pedidoId);
     }
 
     @Override
@@ -55,7 +57,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
         Pedido pedido = recuperarPedido(pedidoId);
         alterarPedidoStatusValidator.validarEmPreparo(pedidoId);
         Pedido pedidoAtualizado = atualizarStatusPedido(pedido, STATUS_PEDIDO_EM_PREPARO);
-        return pedidoOutputPort.salvarPedido(pedidoAtualizado);
+        pedidoOutputPort.atualizarStatus(pedidoAtualizado);
+        return recuperarPedido(pedidoId);
     }
 
     @Override
@@ -63,7 +66,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
         Pedido pedido = recuperarPedido(pedidoId);
         alterarPedidoStatusValidator.validarPronto(pedidoId);
         Pedido pedidoAtualizado = atualizarStatusPedido(pedido, STATUS_PEDIDO_PRONTO);
-        return pedidoOutputPort.salvarPedido(pedidoAtualizado);
+        pedidoOutputPort.pronto(pedidoAtualizado);
+        return recuperarPedido(pedidoId);
     }
 
     @Override
@@ -71,8 +75,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
         Pedido pedido = recuperarPedido(pedidoId);
         alterarPedidoStatusValidator.validarFinalizado(pedidoId);
         Pedido pedidoAtualizado = atualizarStatusPedido(pedido, STATUS_PEDIDO_FINALIZADO);
-        pedidoAtualizado.setDataHoraFinalizado(LocalDateTime.now());
-        return pedidoOutputPort.salvarPedido(pedidoAtualizado);
+        pedidoOutputPort.finalizarPedido(pedidoAtualizado);
+        return recuperarPedido(pedidoId);
     }
 
     @Override
@@ -80,8 +84,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
         Pedido pedido = recuperarPedido(pedidoId);
         alterarPedidoStatusValidator.validarCancelado(pedidoId);
         Pedido pedidoAtualizado = atualizarStatusPedido(pedido, STATUS_PEDIDO_CANCELADO);
-        pedido.setDataHoraFinalizado(LocalDateTime.now());
-        return pedidoOutputPort.salvarPedido(pedidoAtualizado);
+        pedidoOutputPort.cancelaPedido(pedidoAtualizado);
+        return recuperarPedido(pedidoId);
     }
 
     private Pedido recuperarPedido(Long pedidoId) {
@@ -93,7 +97,8 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
     }
 
     private Pedido atualizarStatusPedido(Pedido pedido, String novoStatusPedido) {
-        pedido.setStatusPedido(statusPedidoInputPort.consultarPorNome(novoStatusPedido).getId());
+        pedido.setIdStatusPedido(statusPedidoInputPort.consultarPorNome(novoStatusPedido).getId());
+        pedido.setStatusPedido(novoStatusPedido);
         return pedido;
     }
 

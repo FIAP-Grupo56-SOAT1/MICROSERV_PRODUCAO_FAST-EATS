@@ -7,6 +7,5 @@ import java.util.List;
 public interface StatusPedidoInputPort {
     List<StatusPedido> listar();
     StatusPedido consultarPorNome(String nome);
-
     StatusPedido consultar(Long id);
 }

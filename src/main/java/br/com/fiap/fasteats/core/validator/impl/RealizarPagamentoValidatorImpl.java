@@ -20,7 +20,7 @@ public class RealizarPagamentoValidatorImpl implements RealizarPagamentoValidato
     @Override
     public void validarStatusPedido(Long pedidoId) {
         Pedido pedido = pedidoInputPort.consultar(pedidoId);
-        String status = statusPedidoInputPort.consultar(pedido.getStatusPedido()).getNome();
+        String status = statusPedidoInputPort.consultar(pedido.getStatusPedidoId()).getNome();
         if (!status.equals(STATUS_PEDIDO_AGUARDANDO_PAGAMENTO)) {
             throw new RegraNegocioException("Só é possível realizar o pagamento de um pedido com status AGUARDANDO_PAGAMENTO");
         }

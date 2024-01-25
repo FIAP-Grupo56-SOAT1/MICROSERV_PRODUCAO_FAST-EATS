@@ -49,6 +49,36 @@ public class PedidoAdapter implements PedidoOutputPort {
     }
 
     @Override
+    public Pedido atualizarStatus(Pedido pedido) {
+        pedidoIntegration.atualizarStatus(pedido.getId(),pedido.getIdStatusPedido());
+        return pedido;
+    }
+
+    @Override
+    public Pedido cancelaPedido(Pedido pedidoAtualizado) {
+        pedidoIntegration.cancelaPedido(pedidoAtualizado.getId());
+        return pedidoAtualizado;
+    }
+
+    @Override
+    public Pedido finalizarPedido(Pedido pedidoAtualizado) {
+        pedidoIntegration.finalizarPedido(pedidoAtualizado.getId());
+        return pedidoAtualizado;
+    }
+
+    @Override
+    public Pedido pronto(Pedido pedidoAtualizado) {
+        pedidoIntegration.pronto(pedidoAtualizado.getId());
+        return pedidoAtualizado;
+    }
+
+    @Override
+    public Pedido recebido(Pedido pedidoAtualizado) {
+        pedidoIntegration.recebido(pedidoAtualizado.getId());
+        return pedidoAtualizado;
+    }
+
+    @Override
     public List<Pedido> listarPedidosAndamento() {
         List<PedidoResponse> pedidosEntity = pedidoIntegration.listarPedidosAndamento();
         return pedidosEntity.stream().map(pedidoMapper::toPedido).toList();

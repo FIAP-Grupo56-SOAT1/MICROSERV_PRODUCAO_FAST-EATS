@@ -1,52 +1,45 @@
 package br.com.fiap.fasteats.core.domain.model;
 
+import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+
 
 public class Pedido {
     private Long id;
-    private boolean identificaCliente;
-    private Long statusPedido;
-    private String nomeStatusPedido;
-    private Boolean ativo;
+    private String statusPedido;
+    private Long idStatusPedido;
+    private Long idPedido;
     private LocalDateTime dataHoraCriado;
     private LocalDateTime dataHoraRecebimento;
     private LocalDateTime dataHoraFinalizado;
-    private String tempoEspera;
-    private Double valor;
-    private Long idPagamentoExterno;
+    private double valor;
     private String qrCode;
-    private String urlPagamento;
 
-    public Pedido() {
+    public Pedido(){
+
     }
 
     public Pedido(Long id,
-            boolean identificaCliente,
-            Long statusPedido,
-            String nomeStatusPedido,
-            Boolean ativo,
-            LocalDateTime dataHoraCriado,
-            LocalDateTime dataHoraRecebimento,
-            LocalDateTime dataHoraFinalizado,
-            String tempoEspera,
-            Double valor,
-            Long idPagamentoExterno,
-            String qrCode,
-            String urlPagamento) {
+                  String statusPedido,
+                  Long statusPedidoId,
+                  Long idPedido,
+                  LocalDateTime dataHoraCriado,
+                  LocalDateTime dataHoraRecebimento,
+                  LocalDateTime dataHoraFinalizado,
+                  double valor,
+                  String qrCode,
+                  String urlPagamento) {
         this.id = id;
-        this.identificaCliente = identificaCliente;
         this.statusPedido = statusPedido;
-        this.nomeStatusPedido = nomeStatusPedido;
-        this.ativo = ativo;
+        this.idStatusPedido = statusPedidoId;
+        this.idPedido = idPedido;
         this.dataHoraCriado = dataHoraCriado;
         this.dataHoraRecebimento = dataHoraRecebimento;
         this.dataHoraFinalizado = dataHoraFinalizado;
         this.valor = valor;
-        this.tempoEspera = tempoEspera;
-        this.idPagamentoExterno = idPagamentoExterno;
         this.qrCode = qrCode;
         this.urlPagamento = urlPagamento;
     }
@@ -59,36 +52,36 @@ public class Pedido {
         this.id = id;
     }
 
-    public boolean isIdentificaCliente() {
-        return identificaCliente;
-    }
-
-    public void setIdentificaCliente(boolean identificaCliente) {
-        this.identificaCliente = identificaCliente;
-    }
-
-    public Long getStatusPedido() {
+    public String getStatusPedido() {
         return statusPedido;
     }
 
-    public String getNomeStatusPedido() {
-        return nomeStatusPedido;
-    }
-
-    public void setNomeStatusPedido(String nomeStatusPedido) {
-        this.nomeStatusPedido = nomeStatusPedido;
-    }
-
-    public void setStatusPedido(Long statusPedido) {
+    public void setStatusPedido(String statusPedido) {
         this.statusPedido = statusPedido;
     }
 
-    public Boolean getAtivo() {
-        return ativo;
+    public Long getStatusPedidoId() {
+        return idStatusPedido;
     }
 
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
+    public Long getIdStatusPedido() {
+        return idStatusPedido;
+    }
+
+    public void setIdStatusPedido(Long idStatusPedido) {
+        this.idStatusPedido = idStatusPedido;
+    }
+
+    public void setStatusPedidoId(Long statusPedidoId) {
+        this.idStatusPedido = statusPedidoId;
+    }
+
+    public Long getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
     }
 
     public LocalDateTime getDataHoraCriado() {
@@ -97,10 +90,6 @@ public class Pedido {
 
     public void setDataHoraCriado(LocalDateTime dataHoraCriado) {
         this.dataHoraCriado = dataHoraCriado;
-    }
-
-    public LocalDateTime getDataHoraRecebimento() {
-        return dataHoraRecebimento;
     }
 
     public void setDataHoraRecebimento(LocalDateTime dataHoraRecebimento) {
@@ -115,29 +104,12 @@ public class Pedido {
         this.dataHoraFinalizado = dataHoraFinalizado;
     }
 
-    public String getTempoEspera() {
-        return tempoEspera;
-    }
-
-    public void setTempoEspera(String tempoEspera) {
-        this.tempoEspera = tempoEspera;
-    }
-
-    public Double getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(double valor) {
         this.valor = valor;
-    }
-
-
-    public Long getIdPagamentoExterno() {
-        return idPagamentoExterno;
-    }
-
-    public void setIdPagamentoExterno(Long idPagamentoExterno) {
-        this.idPagamentoExterno = idPagamentoExterno;
     }
 
     public String getQrCode() {
@@ -156,48 +128,22 @@ public class Pedido {
         this.urlPagamento = urlPagamento;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Pedido pedido = (Pedido) o;
-        return identificaCliente == pedido.identificaCliente && Objects.equals(id, pedido.id)
-                && Objects.equals(statusPedido, pedido.statusPedido)
-                && Objects.equals(nomeStatusPedido, pedido.nomeStatusPedido) && Objects.equals(ativo, pedido.ativo)
-                && Objects.equals(dataHoraCriado, pedido.dataHoraCriado)
-                && Objects.equals(dataHoraRecebimento, pedido.dataHoraRecebimento)
-                && Objects.equals(dataHoraFinalizado, pedido.dataHoraFinalizado)
-                && Objects.equals(tempoEspera, pedido.tempoEspera) && Objects.equals(valor, pedido.valor)
+    private String urlPagamento;
 
-                && Objects.equals(idPagamentoExterno, pedido.idPagamentoExterno)
-                && Objects.equals(qrCode, pedido.qrCode) && Objects.equals(urlPagamento, pedido.urlPagamento);
+
+
+
+    public LocalDateTime getDataHoraRecebimento() {
+        return dataHoraRecebimento;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id,  identificaCliente, statusPedido, nomeStatusPedido, ativo, dataHoraCriado,
-                dataHoraRecebimento, dataHoraFinalizado, tempoEspera, valor,  idPagamentoExterno, qrCode,
-                urlPagamento);
+
+
+    public boolean isIdentificaCliente() {
+        return false;
     }
 
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", identificaCliente=" + identificaCliente +
-                ", statusPedido=" + statusPedido +
-                ", nomeStatusPedido='" + nomeStatusPedido + '\'' +
-                ", ativo=" + ativo +
-                ", dataHoraCriado=" + dataHoraCriado +
-                ", dataHoraRecebimento=" + dataHoraRecebimento +
-                ", dataHoraFinalizado=" + dataHoraFinalizado +
-                ", tempoEspera='" + tempoEspera + '\'' +
-                ", valor=" + valor +
-                ", idPagamentoExterno=" + idPagamentoExterno +
-                ", qrCode='" + qrCode + '\'' +
-                ", urlPagamento='" + urlPagamento + '\'' +
-                '}';
+
+    public void setTempoEspera(String s) {
     }
 }

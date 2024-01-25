@@ -18,6 +18,7 @@ public class PedidoResponse {
     private Long id;
     private ClienteResponse cliente;
     private String statusPedido;
+    private Long idStatusPedido;
     private LocalDateTime dataHoraCriado;
     private LocalDateTime dataHoraRecebimento;
     private LocalDateTime dataHoraFinalizado;

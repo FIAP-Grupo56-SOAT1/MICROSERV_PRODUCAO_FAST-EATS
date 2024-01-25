@@ -58,7 +58,7 @@ public class PedidoIntegrationImpl implements PedidoIntegration {
             PedidoResponse pedidoResponse =
                     restTemplate.getForObject(URL_BASE + URI + "/{id}", PedidoResponse.class, id);
 
-            return null;
+            return pedidoResponse;
         } catch (Exception ex) {
             logger.error("Erro retorno microservice pedido ", ex.getCause());
             throw new StatusPedidoNotFound("Erro retorno microservice pedido " + ex.getMessage());
@@ -116,6 +116,46 @@ public class PedidoIntegrationImpl implements PedidoIntegration {
         } catch (Exception ex) {
             logger.error("Erro retorno microservice cozinha ", ex.getCause());
             throw new PedidoNotFound("Erro retorno microservice cozinha " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void cancelaPedido(Long id) {
+        try {
+            restTemplate.put(URL_BASE + URI + "/{id}/cancelar",null, id);
+        } catch (Exception ex) {
+            logger.error("Erro atualizar status microservice pedido ", ex.getCause());
+            throw new PedidoNotFound("Erro atualizar status microservice pedido " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void finalizarPedido(Long id) {
+        try {
+            restTemplate.put(URL_BASE + URI + "/{id}/finalizar",null, id);
+        } catch (Exception ex) {
+            logger.error("Erro atualizar status microservice pedido ", ex.getCause());
+            throw new PedidoNotFound("Erro atualizar status microservice pedido " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void pronto(Long id) {
+        try {
+            restTemplate.put(URL_BASE + URI + "/{id}/pronto",null, id);
+        } catch (Exception ex) {
+            logger.error("Erro atualizar status microservice pedido ", ex.getCause());
+            throw new PedidoNotFound("Erro atualizar status microservice pedido " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void recebido(Long id) {
+        try {
+            restTemplate.put(URL_BASE + URI + "/{id}/recebido",null, id);
+        } catch (Exception ex) {
+            logger.error("Erro atualizar status microservice pedido ", ex.getCause());
+            throw new PedidoNotFound("Erro atualizar status microservice pedido " + ex.getMessage());
         }
     }
 }

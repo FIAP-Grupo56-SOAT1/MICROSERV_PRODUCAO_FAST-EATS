@@ -8,6 +8,5 @@ import java.util.Optional;
 public interface StatusPedidoOutputPort {
     Optional<StatusPedido> consultar(Long id);
     Optional<List<StatusPedido>> listar();
-
     Optional<StatusPedido> consultarPorNome(String nome);
 }
