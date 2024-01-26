@@ -1,13 +1,16 @@
 package br.com.fiap.fasteats.core.dataprovider;
 
-import br.com.fiap.fasteats.core.domain.model.Pedido;
+import br.com.fiap.fasteats.core.domain.model.CozinhaPedido;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface CozinhaPedidoOutputPort {
-    Pedido receberPedido(Pedido pedido);
+    CozinhaPedido salvar(CozinhaPedido cozinhaPedidoId);
 
-    Pedido iniciarPreparoPedido(Pedido pedido);
+    List<CozinhaPedido> listar();
 
-    Pedido finalizarPreparoPedido(Pedido pedido);
+    Optional<CozinhaPedido> consultar(String cozinhaId);
 
-    Pedido retirarPedido(Pedido pedido);
+    Optional<CozinhaPedido> consultarPorIdPedido(Long pedidoId);
 }

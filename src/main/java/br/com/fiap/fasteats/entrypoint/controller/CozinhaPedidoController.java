@@ -1,88 +1,67 @@
 package br.com.fiap.fasteats.entrypoint.controller;
 
-import br.com.fiap.fasteats.collection.Cozinha;
-import br.com.fiap.fasteats.core.domain.model.Pedido;
-import br.com.fiap.fasteats.core.domain.model.StatusPedido;
-import br.com.fiap.fasteats.core.usecase.pedido.CozinhaPedidoInputPort;
-import br.com.fiap.fasteats.core.usecase.pedido.StatusPedidoInputPort;
+import br.com.fiap.fasteats.core.domain.model.CozinhaPedido;
+import br.com.fiap.fasteats.core.usecase.CozinhaPedidoInputPort;
+import br.com.fiap.fasteats.entrypoint.controller.mapper.CozinhaPedidoResponseMapper;
 import br.com.fiap.fasteats.entrypoint.controller.response.CozinhaPedidoResponse;
-import br.com.fiap.fasteats.service.CozinhaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_EM_PREPARO;
-
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("cozinha-pedido")
 @RequiredArgsConstructor
-@Tag(name = "Cozinha", description = "Controller que gerencia o preparo de pedidos na cozinha")
+@Tag(name = "CozinhaPedidoEntity", description = "Controller que gerencia o preparo de pedidos na cozinha")
 public class CozinhaPedidoController {
-    private final StatusPedidoInputPort statusPedidoInputPort;
     private final CozinhaPedidoInputPort cozinhaPedidoInputPort;
+    private final CozinhaPedidoResponseMapper cozinhaPedidoResponseMapper;
 
-    @Autowired
-    private CozinhaService cozinhaService;
-
-    @PostMapping("{idPedido}/receber-pedido")
+    @PostMapping("{pedidoId}/receber-pedido")
     @Operation(summary = "Receber pedido", description = "Receber o pedido.")
-    public ResponseEntity<CozinhaPedidoResponse> receberPedido(@PathVariable final Long idPedido) {
-        Pedido pedidoAtualizado = cozinhaPedidoInputPort.receberPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
-        cozinhaService.receberPedido(idPedido, cozinhaPedidoResponse);
-        return ResponseEntity.ok().body(cozinhaPedidoResponse);
+    public ResponseEntity<Void> receberPedido(@PathVariable final Long pedidoId) {
+        cozinhaPedidoInputPort.receber(pedidoId);
+        return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("{idPedido}/iniciar-preparo")
+    @PatchMapping("{pedidoId}/iniciar-preparo")
     @Operation(summary = "Iniciar preparo", description = "Inicia o preparo de um pedido.")
-    public ResponseEntity<CozinhaPedidoResponse> iniciarPreparo(@PathVariable final Long idPedido) {
-        Pedido pedidoAtualizado = cozinhaPedidoInputPort.iniciarPreparoPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
-        cozinhaService.iniciarPreparo(idPedido, cozinhaPedidoResponse);
+    public ResponseEntity<CozinhaPedidoResponse> iniciarPreparo(@PathVariable final Long pedidoId) {
+        CozinhaPedido cozinhaPedido = cozinhaPedidoInputPort.iniciarPreparo(pedidoId);
+        CozinhaPedidoResponse cozinhaPedidoResponse = cozinhaPedidoResponseMapper.toCozinhaPedidoResponse(cozinhaPedido);
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
 
-    @PatchMapping("{idPedido}/finalizar-preparo")
+    @PatchMapping("{pedidoId}/finalizar-preparo")
     @Operation(summary = "Finalizar preparo", description = "Finaliza o preparo de pedido.")
-    public ResponseEntity<CozinhaPedidoResponse> finalizarPreparo(@PathVariable final Long idPedido) {
-        Pedido pedidoAtualizado = cozinhaPedidoInputPort.finalizarPreparoPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
-        cozinhaService.finalizarPreparo(idPedido, cozinhaPedidoResponse);
+    public ResponseEntity<CozinhaPedidoResponse> finalizarPreparo(@PathVariable final Long pedidoId) {
+        CozinhaPedido cozinhaPedido = cozinhaPedidoInputPort.finalizarPreparo(pedidoId);
+        CozinhaPedidoResponse cozinhaPedidoResponse = cozinhaPedidoResponseMapper.toCozinhaPedidoResponse(cozinhaPedido);
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
 
-    @PatchMapping("{idPedido}/retirar")
+    @PatchMapping("{pedidoId}/retirar")
     @Operation(summary = "Entregar pedido", description = "Realiza a entrega do pedido.")
-    public ResponseEntity<CozinhaPedidoResponse> retirarPedido(@PathVariable final Long idPedido) {
-        Pedido pedidoAtualizado = cozinhaPedidoInputPort.retirarPedido(idPedido);
-        StatusPedido statusPedido = statusPedidoInputPort.consultar(pedidoAtualizado.getStatusPedidoId());
-        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse(idPedido, pedidoAtualizado.getStatusPedidoId(), statusPedido.getNome());
-        cozinhaService.entregarPedido(idPedido, cozinhaPedidoResponse);
+    public ResponseEntity<CozinhaPedidoResponse> retirarPedido(@PathVariable final Long pedidoId) {
+        CozinhaPedido cozinhaPedido = cozinhaPedidoInputPort.retirar(pedidoId);
+        CozinhaPedidoResponse cozinhaPedidoResponse = cozinhaPedidoResponseMapper.toCozinhaPedidoResponse(cozinhaPedido);
         return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
 
-    @GetMapping("getAll")
-    public ResponseEntity<List<Cozinha>> getAlll() {
-        var listConzinha = cozinhaService.findAll();
-        return ResponseEntity.ok().body(listConzinha);
+    @GetMapping("listar")
+    public ResponseEntity<List<CozinhaPedidoResponse>> listar() {
+        List<CozinhaPedido> cozinhaPedidoList = cozinhaPedidoInputPort.listar();
+        List<CozinhaPedidoResponse> cozinhaPedidoResponseList = cozinhaPedidoResponseMapper.toCozinhaPedidoResponseList(cozinhaPedidoList);
+        return ResponseEntity.ok().body(cozinhaPedidoResponseList);
     }
 
-    @GetMapping("{idPedido}")
-    public ResponseEntity<Cozinha> getAlll(@RequestParam("idPedido") Long idPedido) {
-        var cozinha = cozinhaService.findByIdPedidoId(idPedido);
-        return ResponseEntity.ok().body(cozinha);
+    @GetMapping("{pedidoId}")
+    public ResponseEntity<CozinhaPedidoResponse> consultarPorIdPedido(@PathVariable("pedidoId") Long pedidoId) {
+        CozinhaPedido cozinhaPedido = cozinhaPedidoInputPort.consultarPorIdPedido(pedidoId);
+        CozinhaPedidoResponse cozinhaPedidoResponse = cozinhaPedidoResponseMapper.toCozinhaPedidoResponse(cozinhaPedido);
+        return ResponseEntity.ok().body(cozinhaPedidoResponse);
     }
 }

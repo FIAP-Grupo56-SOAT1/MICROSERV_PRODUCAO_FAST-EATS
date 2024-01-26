@@ -10,10 +10,10 @@
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
-    <groupId>br.com.fiap</groupId>
-    <artifactId>api-fasteats</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
-    <name>api-fasteats</name>
+    <groupId>br.com.fiap.producao</groupId>
+    <artifactId>api-producao</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>api-fasteats-producao</name>
     <description>Projeto FIAP para lanchonete fictícia</description>
     <properties>
         <java.version>17</java.version>

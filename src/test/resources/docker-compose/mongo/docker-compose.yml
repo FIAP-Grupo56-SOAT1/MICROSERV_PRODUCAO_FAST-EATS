@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mongodb-producao-fasteats:
+    container_name: mongodb-producao-fasteats
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: fiap56
+      MONGO_INITDB_ROOT_PASSWORD: fiapsoat1grupo56
+    networks:
+      fasteats-producao-net:
+    ports:
+      - '27017:27017'
+    expose:
+      - '27017'
+networks:
+  fasteats-producao-net:

@@ -331,10 +331,10 @@ Resposta esperada: 200<br>
 }
 ```
 
-6)Iniciar o preparo na cozinha<br>
+6)Iniciar o preparo na cozinhaEntity<br>
 
 swagger: http://localhost:8080/swagger-ui/index.html#/Cozinha/iniciarPreparo <br>
-URL: http://localhost:8080/cozinha-pedido/1/iniciar-preparo
+URL: http://localhost:8080/cozinhaEntity-pedido/1/iniciar-preparo
 parâmetro path id : 1 . Obs: id do Pedido
 
 ```
@@ -351,10 +351,10 @@ Resposta esperada: 200<br>
 }
 ```
 
-7)Finalizar o preparo na cozinha<br>
+7)Finalizar o preparo na cozinhaEntity<br>
 
 swagger: http://localhost:8080/swagger-ui/index.html#/Cozinha/finalizarPreparo <br>
-URL: http://localhost:8080/cozinha-pedido/1/finalizar-preparo <br>
+URL: http://localhost:8080/cozinhaEntity-pedido/1/finalizar-preparo <br>
 
 parâmetro path id : 1 . Obs: id do Pedido
 
@@ -375,7 +375,7 @@ Resposta esperada: 200<br>
 8)Retirar a entrega do pedido<br>
 
 swagger: http://localhost:8080/swagger-ui/index.html#/Cozinha/retirarPedido <br>
-URL: http://localhost:8080/cozinha-pedido/1/retirar <br>
+URL: http://localhost:8080/cozinhaEntity-pedido/1/retirar <br>
 parâmetro path id : 1 . Obs: id do Pedido
 
 ```
@@ -547,10 +547,10 @@ Resposta esperada: 200<br>
 }
 ```
 
-5)Iniciar o preparo na cozinha<br>
+5)Iniciar o preparo na cozinhaEntity<br>
 
 swagger: http://localhost:8080/swagger-ui/index.html#/Cozinha/iniciarPreparo <br>
-URL: http://localhost:8080/cozinha-pedido/1/iniciar-preparo
+URL: http://localhost:8080/cozinhaEntity-pedido/1/iniciar-preparo
 parâmetro path id : 1 . Obs: id do Pedido
 
 ```
@@ -567,10 +567,10 @@ Resposta esperada: 200<br>
 }
 ```
 
-6)Finalizar o preparo na cozinha<br>
+6)Finalizar o preparo na cozinhaEntity<br>
 
 swagger: http://localhost:8080/swagger-ui/index.html#/Cozinha/finalizarPreparo <br>
-URL: http://localhost:8080/cozinha-pedido/1/finalizar-preparo <br>
+URL: http://localhost:8080/cozinhaEntity-pedido/1/finalizar-preparo <br>
 
 parâmetro path id : 1 . Obs: id do Pedido
 
@@ -591,7 +591,7 @@ Resposta esperada: 200<br>
 7)Retirar a entrega do pedido<br>
 
 swagger: http://localhost:8080/swagger-ui/index.html#/Cozinha/retirarPedido <br>
-URL: http://localhost:8080/cozinha-pedido/1/retirar <br>
+URL: http://localhost:8080/cozinhaEntity-pedido/1/retirar <br>
 parâmetro path id : 1 . Obs: id do Pedido
 
 ```

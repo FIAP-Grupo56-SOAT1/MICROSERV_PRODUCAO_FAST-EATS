@@ -1,7 +1,6 @@
 package br.com.fiap.fasteats.dataprovider;
 
 import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
-import br.com.fiap.fasteats.core.domain.exception.ProdutoNotFound;
 import br.com.fiap.fasteats.core.domain.exception.RegraNegocioException;
 import br.com.fiap.fasteats.dataprovider.repository.exception.ExceptionResponse;
 import org.springframework.http.HttpStatus;
@@ -27,13 +26,6 @@ public class CustomizedExceptionAdapter extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PedidoNotFound.class)
     public final ResponseEntity<Object> handleUserNotFoundException(PedidoNotFound ex, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), ex.getMessage(), List.of(request.getDescription(false)));
-
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(ProdutoNotFound.class)
-    public final ResponseEntity<Object> handleUserNotFoundException(ProdutoNotFound ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), ex.getMessage(), List.of(request.getDescription(false)));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
