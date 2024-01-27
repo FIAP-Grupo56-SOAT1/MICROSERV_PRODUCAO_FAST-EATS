@@ -36,9 +36,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Start MySQL database
+      - name: Start Mongo database
         run: |
-          cd src/test/resources/docker-compose/mysql
+          cd src/test/resources/docker-compose/mongo
           docker-compose up -d
 
       - name: Run Integration Tests
