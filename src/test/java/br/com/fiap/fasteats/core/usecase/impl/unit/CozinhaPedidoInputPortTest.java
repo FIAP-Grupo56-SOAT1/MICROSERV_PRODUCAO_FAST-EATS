@@ -18,6 +18,7 @@ import java.util.Optional;
 import static br.com.fiap.fasteats.core.constants.ProcessoCozinhaConstants.*;
 import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class CozinhaPedidoInputPortTest {
@@ -35,7 +36,7 @@ class CozinhaPedidoInputPortTest {
     private AutoCloseable openMocks;
 
     private Long pedidoId = 1l;
-    private Long cozinhaId = 1l;
+    private String cozinhaId = "65b1762af79a235f75630fa6";
     @AfterEach
     void tearDown() throws Exception {
         openMocks.close();
@@ -53,10 +54,37 @@ class CozinhaPedidoInputPortTest {
         // Arrange
         List<CozinhaPedido> listCozinhaPedido;
         listCozinhaPedido = List.of(
-                new CozinhaPedido( LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),1l,STATUS_PEDIDO_EM_PREPARO,RECEBIDO),
-                new CozinhaPedido( LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),2l,STATUS_PEDIDO_EM_PREPARO,INICIO_PREPARO),
-                new CozinhaPedido( LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),3l,STATUS_PEDIDO_EM_PREPARO,FINALIZANDO_PREPARO),
-                new CozinhaPedido( LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),LocalDateTime.now(),4l,STATUS_PEDIDO_EM_PREPARO,ENTREGAR_PEDIDO)
+                new CozinhaPedido(cozinhaId,
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        pedidoId,
+                        STATUS_PEDIDO_EM_PREPARO,RECEBIDO),
+
+                new CozinhaPedido("65b1762af79a235f75630fa7",
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        2l,
+                        STATUS_PEDIDO_EM_PREPARO,INICIO_PREPARO),
+
+                new CozinhaPedido( "65b1762af79a235f75630fa8",
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        3l,
+                        STATUS_PEDIDO_EM_PREPARO,FINALIZANDO_PREPARO),
+
+                new CozinhaPedido( "65b1762af79a235f75630fa9",
+                        LocalDateTime.now(),
+                        LocalDateTime.now()
+                        ,LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        4l,
+                        STATUS_PEDIDO_EM_PREPARO,ENTREGAR_PEDIDO)
         );
 
         when(cozinhaPedidoOutputPort.listar()).thenReturn(listCozinhaPedido);
@@ -70,6 +98,24 @@ class CozinhaPedidoInputPortTest {
 
     @Test
     void consultar() {
+
+        // Arrange
+        CozinhaPedido cozinhaPedido = new CozinhaPedido(
+                cozinhaId,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                pedidoId,STATUS_PEDIDO_EM_PREPARO,RECEBIDO);
+
+        when(cozinhaPedidoOutputPort.consultar(cozinhaId)).thenReturn(Optional.of(cozinhaPedido));
+
+        // Act
+        CozinhaPedido result = cozinhaPedidoUseCase.consultar(cozinhaId);
+
+        // Assert
+        assertEquals(cozinhaPedido, result);
+        verify(cozinhaPedidoOutputPort).consultar(cozinhaId);
     }
 
     @Test

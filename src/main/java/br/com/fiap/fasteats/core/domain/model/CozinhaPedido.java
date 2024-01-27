@@ -16,7 +16,7 @@ public class CozinhaPedido {
     public CozinhaPedido() {
     }
 
-    public CozinhaPedido(
+    public CozinhaPedido(String cozinhaId,
                          LocalDateTime dataRecebimentoDoPedido,
                          LocalDateTime dataInicioPreparo,
                          LocalDateTime dataFinalizacaoPreparo,
@@ -24,6 +24,7 @@ public class CozinhaPedido {
                          Long idPedido,
                          String statusPedido,
                          String processoAtual) {
+        this.cozinhaId = cozinhaId;
         this.dataRecebimentoDoPedido = dataRecebimentoDoPedido;
         this.dataInicioPreparo = dataInicioPreparo;
         this.dataFinalizacaoPreparo = dataFinalizacaoPreparo;
