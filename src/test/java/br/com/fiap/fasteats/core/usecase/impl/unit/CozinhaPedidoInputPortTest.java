@@ -1,14 +1,21 @@
 package br.com.fiap.fasteats.core.usecase.impl.unit;
 
+import br.com.fiap.fasteats.core.dataprovider.AlterarPedidoStatusOutputPort;
 import br.com.fiap.fasteats.core.dataprovider.CozinhaPedidoOutputPort;
 import br.com.fiap.fasteats.core.dataprovider.PedidoOutputPort;
+import br.com.fiap.fasteats.core.domain.exception.CozinhaPedidoNotFound;
+import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
 import br.com.fiap.fasteats.core.domain.model.CozinhaPedido;
 import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.core.usecase.AlterarPedidoStatusInputPort;
+import br.com.fiap.fasteats.core.usecase.impl.AlterarPedidoStatusUseCase;
 import br.com.fiap.fasteats.core.usecase.impl.CozinhaPedidoUseCase;
 import br.com.fiap.fasteats.core.validator.AlterarPedidoStatusValidator;
+import br.com.fiap.fasteats.dataprovider.client.PedidoIntegration;
+import br.com.fiap.fasteats.dataprovider.client.StatusPedidoIntegration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -39,8 +46,17 @@ class CozinhaPedidoInputPortTest {
     @InjectMocks
     private CozinhaPedidoUseCase  cozinhaPedidoUseCase;
 
+
+    @Mock
+    private AlterarPedidoStatusOutputPort alterarPedidoStatusOutputPort;
+
+    @InjectMocks
+    private AlterarPedidoStatusUseCase alterarPedidoStatusUseCase;
+
+
     @Mock
     private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
+
 
     private AutoCloseable openMocks;
 
@@ -105,6 +121,8 @@ class CozinhaPedidoInputPortTest {
         assertEquals(listCozinhaPedido, result);
     }
 
+
+
     @Test
     void consultar() {
 
@@ -124,6 +142,13 @@ class CozinhaPedidoInputPortTest {
 
         // Assert
         assertEquals(cozinhaPedido, result);
+        verify(cozinhaPedidoOutputPort).consultar(cozinhaId);
+    }
+
+    @Test
+    void consultarErro() {
+
+        assertThrows(CozinhaPedidoNotFound.class, () -> cozinhaPedidoUseCase.consultar(cozinhaId));
         verify(cozinhaPedidoOutputPort).consultar(cozinhaId);
     }
 
@@ -152,6 +177,13 @@ class CozinhaPedidoInputPortTest {
     }
 
     @Test
+    void consultarPorIdPedidoErro() {
+
+        assertThrows(CozinhaPedidoNotFound.class, () -> cozinhaPedidoUseCase.consultarPorIdPedido(pedidoId));
+        verify(cozinhaPedidoOutputPort).consultarPorIdPedido(pedidoId);
+    }
+
+    @Test
     void receber() {
         var dateTimeNow = LocalDateTime.now();
 
@@ -176,7 +208,19 @@ class CozinhaPedidoInputPortTest {
         // Assert
         assertEquals(cozinhaPedido, result);
         verify(cozinhaPedidoOutputPort).salvar(result);
-        //verify(alterarPedidoStatusValidator).validarRecebido(pedidoId);
+    }
+
+    @Test
+    void receberErro() {
+
+        //Arrange
+        when(alterarPedidoStatusOutputPort.recebido(pedidoId)).thenReturn(Optional.empty());
+
+        //Act & Assert
+        assertThrows(PedidoNotFound.class, () -> alterarPedidoStatusUseCase.recebido(pedidoId));
+
+        verify(alterarPedidoStatusValidator).validarRecebido(pedidoId);
+        verify(alterarPedidoStatusOutputPort).recebido(pedidoId);
     }
 
     @Test
@@ -206,6 +250,22 @@ class CozinhaPedidoInputPortTest {
     }
 
     @Test
+    void iniciarPreparo_erro() {
+
+
+        //Arrange
+        when(alterarPedidoStatusOutputPort.emPreparo(pedidoId)).thenReturn(Optional.empty());
+
+        //Act & Assert
+        assertThrows(PedidoNotFound.class, () -> alterarPedidoStatusUseCase.emPreparo(pedidoId));
+
+        verify(alterarPedidoStatusValidator).validarEmPreparo(pedidoId);
+        verify(alterarPedidoStatusOutputPort).emPreparo(pedidoId);
+
+    }
+
+
+    @Test
     void finalizarPreparo() {
 
 
@@ -232,6 +292,22 @@ class CozinhaPedidoInputPortTest {
     }
 
     @Test
+    void finalizarPreparo_erro() {
+
+
+        //Arrange
+        when(alterarPedidoStatusOutputPort.finalizado(pedidoId)).thenReturn(Optional.empty());
+
+        //Act & Assert
+        assertThrows(PedidoNotFound.class, () -> alterarPedidoStatusUseCase.finalizado(pedidoId));
+
+        verify(alterarPedidoStatusValidator).validarFinalizado(pedidoId);
+        verify(alterarPedidoStatusOutputPort).finalizado(pedidoId);
+
+    }
+
+
+    @Test
     void retirar() {
 
 
@@ -255,5 +331,20 @@ class CozinhaPedidoInputPortTest {
         // Assert
         assertEquals(cozinhaPedido, result);
         verify(cozinhaPedidoOutputPort).salvar(result);
+    }
+
+    @Test
+    void retirarErro() {
+
+
+        //Arrange
+        when(alterarPedidoStatusOutputPort.finalizado(pedidoId)).thenReturn(Optional.empty());
+
+        //Act & Assert
+        assertThrows(PedidoNotFound.class, () -> alterarPedidoStatusUseCase.finalizado(pedidoId));
+
+        verify(alterarPedidoStatusValidator).validarFinalizado(pedidoId);
+        verify(alterarPedidoStatusOutputPort).finalizado(pedidoId);
+
     }
 }
