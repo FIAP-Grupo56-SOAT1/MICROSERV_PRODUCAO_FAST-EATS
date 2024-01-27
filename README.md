@@ -25,8 +25,8 @@ O modelo acima foi criado utilizando a plataforma [Excalidraw](https://excalidra
 
 A documentação da API está disponível através dos seguintes links:
 
-- Swagger: [http://localhost:8081/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-- OpenAPI: [http://localhost:8081/v3/api-docs](http://localhost:8080/v3/api-docs)
+- Swagger: [http://localhost:8082/swagger-ui/index.html](http://localhost:8082/swagger-ui/index.html)
+- OpenAPI: [http://localhost:8082/v3/api-docs](http://localhost:8082/v3/api-docs)
 
 ## Arquitetura
 
