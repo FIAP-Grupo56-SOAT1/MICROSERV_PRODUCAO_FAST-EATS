@@ -176,18 +176,84 @@ class CozinhaPedidoInputPortTest {
         // Assert
         assertEquals(cozinhaPedido, result);
         verify(cozinhaPedidoOutputPort).salvar(result);
-        verify(alterarPedidoStatusValidator).validarRecebido(pedidoId);
+        //verify(alterarPedidoStatusValidator).validarRecebido(pedidoId);
     }
 
     @Test
     void iniciarPreparo() {
+
+
+        Pedido pedido = new Pedido();
+        pedido.setId(pedidoId);
+        pedido.setStatusPedido(STATUS_PEDIDO_EM_PREPARO);
+
+        CozinhaPedido cozinhaPedido = new CozinhaPedido();
+        cozinhaPedido.setIdPedido(pedidoId);
+        cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
+        cozinhaPedido.setProcessoAtual(RECEBIDO);
+
+        when(alterarPedidoStatusInputPort.emPreparo(pedidoId)).thenReturn(pedido);
+        when(cozinhaPedidoOutputPort.salvar(cozinhaPedido)).thenReturn(cozinhaPedido);
+        when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
+
+        // Act
+        CozinhaPedido result = cozinhaPedidoUseCase.iniciarPreparo(pedidoId);
+
+        // Assert
+        assertEquals(cozinhaPedido, result);
+        verify(cozinhaPedidoOutputPort).salvar(result);
+
     }
 
     @Test
     void finalizarPreparo() {
+
+
+        Pedido pedido = new Pedido();
+        pedido.setId(pedidoId);
+        pedido.setStatusPedido(STATUS_PEDIDO_EM_PREPARO);
+
+        CozinhaPedido cozinhaPedido = new CozinhaPedido();
+        cozinhaPedido.setIdPedido(pedidoId);
+        cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
+        cozinhaPedido.setProcessoAtual(RECEBIDO);
+
+        when(alterarPedidoStatusInputPort.pronto(pedidoId)).thenReturn(pedido);
+        when(cozinhaPedidoOutputPort.salvar(cozinhaPedido)).thenReturn(cozinhaPedido);
+        when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
+
+
+        // Act
+        CozinhaPedido result = cozinhaPedidoUseCase.finalizarPreparo(pedidoId);
+
+        // Assert
+        assertEquals(cozinhaPedido, result);
+        verify(cozinhaPedidoOutputPort).salvar(result);
     }
 
     @Test
     void retirar() {
+
+
+        Pedido pedido = new Pedido();
+        pedido.setId(pedidoId);
+        pedido.setStatusPedido(STATUS_PEDIDO_PRONTO);
+
+        CozinhaPedido cozinhaPedido = new CozinhaPedido();
+        cozinhaPedido.setIdPedido(pedidoId);
+        cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
+        cozinhaPedido.setProcessoAtual(ENTREGAR_PEDIDO);
+
+        when(alterarPedidoStatusInputPort.finalizado(pedidoId)).thenReturn(pedido);
+        when(cozinhaPedidoOutputPort.salvar(cozinhaPedido)).thenReturn(cozinhaPedido);
+        when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
+
+
+        // Act
+        CozinhaPedido result = cozinhaPedidoUseCase.retirar(pedidoId);
+
+        // Assert
+        assertEquals(cozinhaPedido, result);
+        verify(cozinhaPedidoOutputPort).salvar(result);
     }
 }

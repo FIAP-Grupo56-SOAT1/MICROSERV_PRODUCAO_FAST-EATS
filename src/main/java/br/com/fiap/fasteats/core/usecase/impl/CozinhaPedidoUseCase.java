@@ -72,7 +72,7 @@ public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
         CozinhaPedido cozinhaPedido = consultarPorIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
         cozinhaPedido.setProcessoAtual(FINALIZANDO_PREPARO);
-        cozinhaPedido.setDataFinalizacaoPreparo(LocalDateTime.now());
+        cozinhaPedido.setDataFinalizacaoPreparo(pedido.getDataHoraFinalizado());
 
         return cozinhaPedidoOutputPort.salvar(cozinhaPedido);
     }
@@ -84,7 +84,7 @@ public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
         CozinhaPedido cozinhaPedido = consultarPorIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
         cozinhaPedido.setProcessoAtual(ENTREGAR_PEDIDO);
-        cozinhaPedido.setDataEntregaPedido(LocalDateTime.now());
+        cozinhaPedido.setDataEntregaPedido(pedido.getDataHoraFinalizado());
 
         return cozinhaPedidoOutputPort.salvar(cozinhaPedido);
     }
