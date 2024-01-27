@@ -1,9 +1,12 @@
 package br.com.fiap.fasteats.core.usecase.impl.unit;
 
 import br.com.fiap.fasteats.core.dataprovider.CozinhaPedidoOutputPort;
+import br.com.fiap.fasteats.core.dataprovider.PedidoOutputPort;
 import br.com.fiap.fasteats.core.domain.model.CozinhaPedido;
+import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.core.usecase.AlterarPedidoStatusInputPort;
 import br.com.fiap.fasteats.core.usecase.impl.CozinhaPedidoUseCase;
+import br.com.fiap.fasteats.core.validator.AlterarPedidoStatusValidator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,10 +31,16 @@ class CozinhaPedidoInputPortTest {
     private  CozinhaPedidoOutputPort cozinhaPedidoOutputPort;
 
     @Mock
+    private PedidoOutputPort pedidoOutputPort;
+
+    @Mock
     private  AlterarPedidoStatusInputPort alterarPedidoStatusInputPort;
 
     @InjectMocks
     private CozinhaPedidoUseCase  cozinhaPedidoUseCase;
+
+    @Mock
+    private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
 
     private AutoCloseable openMocks;
 
@@ -120,10 +129,54 @@ class CozinhaPedidoInputPortTest {
 
     @Test
     void consultarPorIdPedido() {
+
+        // Arrange
+        CozinhaPedido cozinhaPedido = new CozinhaPedido(
+                cozinhaId,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                pedidoId,
+                STATUS_PEDIDO_EM_PREPARO,
+                RECEBIDO);
+
+        when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
+
+        // Act
+        CozinhaPedido result = cozinhaPedidoUseCase.consultarPorIdPedido(pedidoId);
+
+        // Assert
+        assertEquals(cozinhaPedido, result);
+        verify(cozinhaPedidoOutputPort).consultarPorIdPedido(pedidoId);
     }
 
     @Test
     void receber() {
+        var dateTimeNow = LocalDateTime.now();
+
+        Pedido pedido = new Pedido();
+        pedido.setId(pedidoId);
+        pedido.setStatusPedido(STATUS_PEDIDO_PAGO);
+        pedido.setDataHoraRecebimento(dateTimeNow);
+
+        CozinhaPedido cozinhaPedido = new CozinhaPedido();
+        cozinhaPedido.setIdPedido(pedidoId);
+        cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
+        cozinhaPedido.setProcessoAtual(RECEBIDO);
+        cozinhaPedido.setDataRecebimentoDoPedido(dateTimeNow);
+
+        when(alterarPedidoStatusInputPort.recebido(pedidoId)).thenReturn(pedido);
+        when(cozinhaPedidoOutputPort.salvar(cozinhaPedido)).thenReturn(cozinhaPedido);
+        when(pedidoOutputPort.consultar(pedidoId)).thenReturn(pedido);
+
+        // Act
+        CozinhaPedido result = cozinhaPedidoUseCase.receber(pedidoId);
+
+        // Assert
+        assertEquals(cozinhaPedido, result);
+        verify(cozinhaPedidoOutputPort).salvar(result);
+        verify(alterarPedidoStatusValidator).validarRecebido(pedidoId);
     }
 
     @Test

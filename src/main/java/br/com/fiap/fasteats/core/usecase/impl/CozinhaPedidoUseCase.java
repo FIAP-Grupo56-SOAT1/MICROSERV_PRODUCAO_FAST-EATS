@@ -48,7 +48,7 @@ public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
         cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
         cozinhaPedido.setProcessoAtual(RECEBIDO);
-        cozinhaPedido.setDataRecebimentoDoPedido(LocalDateTime.now());
+        cozinhaPedido.setDataRecebimentoDoPedido(pedido.getDataHoraRecebimento());
 
         return cozinhaPedidoOutputPort.salvar(cozinhaPedido);
     }
