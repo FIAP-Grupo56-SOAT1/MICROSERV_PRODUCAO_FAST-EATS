@@ -126,7 +126,6 @@ class AlterarPedidoStatusUseCaseUnitTest {
         verify(alterarPedidoStatusOutputPort).pronto(PEDIDO_ID);
     }
 
-
     @Test
     void pronto_erro() {
         //Arrange

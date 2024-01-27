@@ -1,33 +1,33 @@
 package br.com.fiap.fasteats.bdd.unit;
 
-
-import br.com.fiap.fasteats.core.domain.model.CozinhaPedido;
+import br.com.fiap.fasteats.core.dataprovider.AlterarPedidoStatusOutputPort;
 import br.com.fiap.fasteats.core.domain.model.Pedido;
-import br.com.fiap.fasteats.core.usecase.CozinhaPedidoInputPort;
-import br.com.fiap.fasteats.entrypoint.controller.mapper.CozinhaPedidoResponseMapper;
+import br.com.fiap.fasteats.core.usecase.impl.AlterarPedidoStatusUseCase;
+import br.com.fiap.fasteats.core.validator.AlterarPedidoStatusValidator;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_PAGO;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_RECEBIDO;
 import static org.mockito.Mockito.when;
+
 
 public class StepDefinition {
 
-
-    @Mock
-    private CozinhaPedidoInputPort cozinhaPedidoInputPort;
-
-    @Mock
-    private CozinhaPedidoResponseMapper cozinhaPedidoResponseMapper;
-    private Long pedidoId = 1L;
-
-    private CozinhaPedido cozinhaPedido;
     AutoCloseable openMocks;
+
+    LocalDateTime dateTimeNow = LocalDateTime.now();
+
+    Pedido pedido;
+
     @Before
     public void setUp() {
         openMocks = MockitoAnnotations.openMocks(this);
@@ -38,31 +38,40 @@ public class StepDefinition {
         openMocks.close();
     }
 
-    @Quando("o pedido e recebido na cozinha")
-    public void o_pedido_e_recebido_na_cozinha() {
-        //cozinhaPedidoInputPort.receber(pedidoId);
-        when(cozinhaPedidoInputPort.receber(pedidoId)).thenReturn(cozinhaPedido);
+    @Mock
+    private AlterarPedidoStatusOutputPort alterarPedidoStatusOutputPort;
+
+    @Mock
+    private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
+
+    @InjectMocks
+    private AlterarPedidoStatusUseCase alterarPedidoStatusUseCase;
+
+    private final Long PEDIDO_ID = 1L;
+
+    @Dado("que o pedido e criado e enviado para cozinha")
+    public void que_o_pedido_e_criado_e_enviado_para_cozinha() {
+        pedido = getPedido();
+        when(alterarPedidoStatusOutputPort.recebido(PEDIDO_ID)).thenReturn(Optional.of(pedido));
+        var pedidoRecebido = alterarPedidoStatusUseCase.recebido(PEDIDO_ID);
     }
+    @Quando("o pedido e recebido e processado na cozinha")
+    public void o_pedido_e_recebido_e_processado_na_cozinha() {
 
-
+    }
     @Entao("o pedido e definido como status recebido")
     public void o_pedido_e_definido_como_status_recebido() {
-        // Write code here that turns the phrase above into concrete actions
-        //throw new io.cucumber.java.PendingException();
-    }
 
-
-    @Dado("que o numero do pedido e informado na cozinha")
-    public void queONumeroDoPedidoEInformadoNaCozinha() {
     }
 
 
     private Pedido getPedido(){
-
-        var pedido = new Pedido();
-        pedido.setStatusPedido(STATUS_PEDIDO_PAGO);
-        pedido.setId(pedidoId);
+        Pedido pedido = new Pedido();
+        pedido.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
+        pedido.setId(PEDIDO_ID);
+        pedido.setDataHoraRecebimento(dateTimeNow);
 
         return pedido;
     }
+
 }
