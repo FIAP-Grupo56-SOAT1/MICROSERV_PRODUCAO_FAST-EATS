@@ -16,10 +16,14 @@ public class CozinhaPedido {
     public CozinhaPedido() {
     }
 
-    public CozinhaPedido(String cozinhaId, LocalDateTime dataRecebimentoDoPedido, LocalDateTime dataInicioPreparo,
-                         LocalDateTime dataFinalizacaoPreparo, LocalDateTime dataEntregaPedido, Long idPedido,
-                         String statusPedido, String processoAtual) {
-        this.cozinhaId = cozinhaId;
+    public CozinhaPedido(
+                         LocalDateTime dataRecebimentoDoPedido,
+                         LocalDateTime dataInicioPreparo,
+                         LocalDateTime dataFinalizacaoPreparo,
+                         LocalDateTime dataEntregaPedido,
+                         Long idPedido,
+                         String statusPedido,
+                         String processoAtual) {
         this.dataRecebimentoDoPedido = dataRecebimentoDoPedido;
         this.dataInicioPreparo = dataInicioPreparo;
         this.dataFinalizacaoPreparo = dataFinalizacaoPreparo;
