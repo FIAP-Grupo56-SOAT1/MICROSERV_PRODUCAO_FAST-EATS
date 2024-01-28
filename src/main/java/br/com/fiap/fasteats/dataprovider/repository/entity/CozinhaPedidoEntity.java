@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-
 import java.time.LocalDateTime;
 
 @Data
@@ -28,5 +27,5 @@ public class CozinhaPedidoEntity {
     private LocalDateTime dataEntregaPedido;
     private Long idPedido;
     private String statusPedido;
-    public String processoAtual;
+    private String processoAtual;
 }

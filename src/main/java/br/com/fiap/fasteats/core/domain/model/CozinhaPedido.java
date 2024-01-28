@@ -11,7 +11,7 @@ public class CozinhaPedido {
     private LocalDateTime dataEntregaPedido;
     private Long idPedido;
     private String statusPedido;
-    public String processoAtual;
+    private String processoAtual;
 
     public CozinhaPedido() {
     }
@@ -109,19 +109,5 @@ public class CozinhaPedido {
     @Override
     public int hashCode() {
         return Objects.hash(cozinhaId, dataRecebimentoDoPedido, dataInicioPreparo, dataFinalizacaoPreparo, dataEntregaPedido, idPedido, statusPedido, processoAtual);
-    }
-
-    @Override
-    public String toString() {
-        return "CozinhaPedido{" +
-                "cozinhaId='" + cozinhaId + '\'' +
-                ", dataRecebimentoDoPedido=" + dataRecebimentoDoPedido +
-                ", dataInicioPreparo=" + dataInicioPreparo +
-                ", dataFinalizacaoPreparo=" + dataFinalizacaoPreparo +
-                ", dataEntregaPedido=" + dataEntregaPedido +
-                ", idPedido=" + idPedido +
-                ", statusPedido='" + statusPedido + '\'' +
-                ", processoAtual='" + processoAtual + '\'' +
-                '}';
     }
 }

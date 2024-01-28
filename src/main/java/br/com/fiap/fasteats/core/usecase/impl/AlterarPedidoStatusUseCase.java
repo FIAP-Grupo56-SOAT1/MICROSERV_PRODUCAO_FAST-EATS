@@ -44,7 +44,7 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
                 .orElseThrow(() -> pedidoNaoEncontrado(pedidoId));
     }
 
-    private PedidoNotFound pedidoNaoEncontrado(Long pedidoId) {
-        throw new PedidoNotFound("Pedido não encontrado id " + pedidoId);
+    private RuntimeException pedidoNaoEncontrado(Long pedidoId) {
+        return new PedidoNotFound("Pedido " + pedidoId + " não encontrado");
     }
 }

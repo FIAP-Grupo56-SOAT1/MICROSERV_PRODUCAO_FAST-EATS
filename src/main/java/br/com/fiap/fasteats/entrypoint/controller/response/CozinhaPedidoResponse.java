@@ -2,7 +2,9 @@ package br.com.fiap.fasteats.entrypoint.controller.response;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

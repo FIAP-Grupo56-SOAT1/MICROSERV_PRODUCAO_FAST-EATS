@@ -44,7 +44,6 @@ class AlterarPedidoStatusUseCaseUnitTest {
 
     @Test
     void recebido() {
-
         //Arrange
         Pedido pedido = new Pedido();
         pedido.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
@@ -65,7 +64,6 @@ class AlterarPedidoStatusUseCaseUnitTest {
 
     @Test
     void recebidoErro() {
-
         //Arrange
         when(alterarPedidoStatusOutputPort.recebido(PEDIDO_ID)).thenReturn(Optional.empty());
 
@@ -78,7 +76,6 @@ class AlterarPedidoStatusUseCaseUnitTest {
 
     @Test
     void emPreparo() {
-
         //Arrange
         Pedido pedido = new Pedido();
         pedido.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
