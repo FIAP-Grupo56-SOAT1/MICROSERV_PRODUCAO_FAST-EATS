@@ -64,6 +64,20 @@ public class CozinhaIniciarPreparo {
     @Mock
     private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
 
-
+    @Dado("que o a pedido foi pagao")
+    public void que_o_a_pedido_foi_pagao() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Quando("a cozinha recebe o pedidoId")
+    public void a_cozinha_recebe_o_pedido_id() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Entao("inicia o preparo na cozinha")
+    public void inicia_o_preparo_na_cozinha() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 
 }

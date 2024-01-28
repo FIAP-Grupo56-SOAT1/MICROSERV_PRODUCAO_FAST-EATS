@@ -65,6 +65,20 @@ public class CozinhaFinalizarPreparo {
     private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
 
 
-
+    @Dado("que o a cozinha finaliza o pedido")
+    public void que_o_a_cozinha_finaliza_o_pedido() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Quando("o status do pedido está em preparo")
+    public void o_status_do_pedido_está_em_preparo() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Entao("o pedido vai para o status de finalizado")
+    public void o_pedido_vai_para_o_status_de_finalizado() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 
 }

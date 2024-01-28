@@ -64,6 +64,21 @@ public class CozinhaLista {
     @Mock
     private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
 
+    @Dado("que e solicitado todos os processo")
+    public void que_e_solicitado_todos_os_processo() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Quando("os pedidos entratar na cozinha")
+    public void os_pedidos_entratar_na_cozinha() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Entao("a cozinha possui todos os pedido iniciados")
+    public void a_cozinha_possui_todos_os_pedido_iniciados() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 
 
 }

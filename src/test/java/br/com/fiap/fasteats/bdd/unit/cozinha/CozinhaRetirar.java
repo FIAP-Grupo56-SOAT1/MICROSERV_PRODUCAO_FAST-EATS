@@ -64,6 +64,20 @@ public class CozinhaRetirar {
     @Mock
     private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
 
-
+    @Dado("que o a pedido está pronto")
+    public void que_o_a_pedido_está_pronto() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Quando("a cozinha atualizar o status do pedido")
+    public void a_cozinha_atualizar_o_status_do_pedido() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Entao("o pedido fica disponivel para retirada")
+    public void o_pedido_fica_disponivel_para_retirada() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 
 }

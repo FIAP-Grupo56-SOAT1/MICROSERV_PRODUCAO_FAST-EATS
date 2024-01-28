@@ -66,6 +66,11 @@ public class CozinhaConsulta {
     private AlterarPedidoStatusValidator alterarPedidoStatusValidator;
 
 
+    @Dado("que o a cozinha recebe o cozinhaId")
+    public void que_o_a_cozinha_recebe_o_cozinha_id() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 
 
 }
