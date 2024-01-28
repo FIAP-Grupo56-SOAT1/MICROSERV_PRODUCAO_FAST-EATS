@@ -2,6 +2,7 @@ package br.com.fiap.fasteats.bdd.unit;
 
 import br.com.fiap.fasteats.core.dataprovider.AlterarPedidoStatusOutputPort;
 import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
+import br.com.fiap.fasteats.core.domain.exception.RegraNegocioException;
 import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.core.usecase.impl.AlterarPedidoStatusUseCase;
 import br.com.fiap.fasteats.core.validator.AlterarPedidoStatusValidator;
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-public class PedidoRecebido {
+public class PedidoEmPreparo {
 
     AutoCloseable openMocks;
 
@@ -32,6 +33,8 @@ public class PedidoRecebido {
     Pedido pedido;
 
     Pedido pedidoRecebido;
+
+    Pedido pedidoNaoPago ;
 
     @Before
     public void setUp() {
@@ -87,9 +90,32 @@ public class PedidoRecebido {
     }
 
 
+    @Dado("que o pedido enviado nao esta pago")
+    public void que_o_pedido_enviado_nao_esta_pago() {
+        pedidoNaoPago = getPedidoNaoPago();
+        when(alterarPedidoStatusOutputPort.recebido(pedidoNaoPago.getId())).thenReturn(Optional.of(pedidoNaoPago));
+    }
+    @Quando("o pedido esta com staus diferente de pago")
+    public void o_pedido_esta_com_staus_difernte_de_pago() {
+
+    }
+    @Entao("o pedido nao pode ser recebido na cozinha")
+    public void o_pedido_nao_pode_ser_recebido_na_cozinha() {
+
+    }
+
+
     private Pedido getPedido(){
         Pedido pedido = new Pedido();
+        pedido.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
         return pedido;
+    }
+
+    private Pedido getPedidoNaoPago(){
+        Pedido pedidoNaoPago = new Pedido();
+        pedidoNaoPago.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
+        pedidoNaoPago.setId(2l);
+        return pedidoNaoPago;
     }
 
 

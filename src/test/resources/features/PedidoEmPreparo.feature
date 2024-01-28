@@ -7,7 +7,7 @@ Funcionalidade: Receber pedido na cozinha
     Entao o pedido e definido como status em preparo
 
 
-  Cenario: Enviar pedido para cozinha
-    Dado que o pedido que não existe é enviado para cozinha
-    Quando o pedido e nao existe
-    Entao o pedido nao e preparado e retorna mensagem de erro
+  Cenario: Enviar um pedido que nao esta pago para cozinha
+    Dado que o pedido enviado nao esta pago
+    Quando o pedido esta com staus diferente de pago
+    Entao o pedido nao pode ser recebido na cozinha

@@ -16,8 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_FINALIZADO;
-import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_PRONTO;
+import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -71,7 +70,6 @@ public class PedidoFinalizado {
         verify(alterarPedidoStatusOutputPort).finalizado(PEDIDO_ID);
     }
 
-
     private Pedido getPedido() {
         Pedido pedido = new Pedido();
         pedido.setStatusPedido(STATUS_PEDIDO_FINALIZADO);
@@ -79,9 +77,33 @@ public class PedidoFinalizado {
         pedido.setDataHoraCriado(dateTimeNow);
         pedido.setDataHoraRecebimento(dateTimeNow);
         pedido.setDataHoraFinalizado(dateTimeNow);
-
-
         return pedido;
+    }
+
+//    private Pedido getPedidoDifernteFinalizado() {
+//        Pedido pedidoStatusDiferenteFinalizado = new Pedido();
+//        pedidoStatusDiferenteFinalizado.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
+//        pedidoStatusDiferenteFinalizado.setId(2l);
+//        pedidoStatusDiferenteFinalizado.setDataHoraCriado(dateTimeNow);
+//        pedidoStatusDiferenteFinalizado.setDataHoraRecebimento(dateTimeNow);
+//        pedidoStatusDiferenteFinalizado.setDataHoraFinalizado(dateTimeNow);
+//        return pedidoStatusDiferenteFinalizado;
+//    }
+
+    @Dado("que o pedido nao esta com status finalizado")
+    public void que_o_pedido_nao_esta_com_status_finalizado() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Quando("o pedido esta com status difernete de pronto")
+    public void o_pedido_esta_com_status_difernete_de_pronto() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Entao("o pedido nao e finalizado na cozinha")
+    public void o_pedido_nao_e_finalizado_na_cozinha() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
 
 }

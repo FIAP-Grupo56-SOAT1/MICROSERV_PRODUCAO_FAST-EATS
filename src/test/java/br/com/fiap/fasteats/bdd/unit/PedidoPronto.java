@@ -74,6 +74,23 @@ public class PedidoPronto {
         verify(alterarPedidoStatusOutputPort).pronto(PEDIDO_ID);
     }
 
+
+    @Dado("que o pedido existe no sistema")
+    public void que_o_pedido_existe_no_sistema() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Quando("o pedido esta com status difente de em preparo")
+    public void o_pedido_esta_com_status_difente_de_em_preparo() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Entao("o estatus do pedido nao pode ser atualizado para pronto")
+    public void o_estatus_do_pedido_nao_pode_ser_atualizado_para_pronto() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
     private Pedido getPedido() {
         Pedido pedido = new Pedido();
         pedido.setStatusPedido(STATUS_PEDIDO_PRONTO);
