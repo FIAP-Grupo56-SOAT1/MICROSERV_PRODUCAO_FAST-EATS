@@ -47,7 +47,7 @@ public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
         CozinhaPedido cozinhaPedido = new CozinhaPedido();
         cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(RECEBIDO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_RECEBIDO);
         cozinhaPedido.setDataRecebimentoDoPedido(pedido.getDataHoraRecebimento());
 
         return cozinhaPedidoOutputPort.salvar(cozinhaPedido);
@@ -59,7 +59,7 @@ public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
 
         CozinhaPedido cozinhaPedido = consultarPorIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(INICIO_PREPARO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_INICIO_PREPARO);
         cozinhaPedido.setDataInicioPreparo(LocalDateTime.now());
 
         return cozinhaPedidoOutputPort.salvar(cozinhaPedido);
@@ -71,7 +71,7 @@ public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
 
         CozinhaPedido cozinhaPedido = consultarPorIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(FINALIZANDO_PREPARO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_FINALIZANDO_PREPARO);
         cozinhaPedido.setDataFinalizacaoPreparo(pedido.getDataHoraFinalizado());
 
         return cozinhaPedidoOutputPort.salvar(cozinhaPedido);
@@ -83,17 +83,17 @@ public class CozinhaPedidoUseCase implements CozinhaPedidoInputPort {
 
         CozinhaPedido cozinhaPedido = consultarPorIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(ENTREGAR_PEDIDO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_ENTREGAR_PEDIDO);
         cozinhaPedido.setDataEntregaPedido(pedido.getDataHoraFinalizado());
 
         return cozinhaPedidoOutputPort.salvar(cozinhaPedido);
     }
 
-    private CozinhaPedidoNotFound cozinhaPedidoNaoEncontrado(String cozinhaPedidoId) {
+    private RuntimeException cozinhaPedidoNaoEncontrado(String cozinhaPedidoId) {
         return new CozinhaPedidoNotFound("Cozinha Pedido " + cozinhaPedidoId + " não encontrado");
     }
 
-    private CozinhaPedidoNotFound cozinhaPedidoNaoEncontradoPorPedidoId(Long pedidoId) {
+    private RuntimeException cozinhaPedidoNaoEncontradoPorPedidoId(Long pedidoId) {
         return new CozinhaPedidoNotFound("Cozinha Pedido para o pedido " + pedidoId + " não encontrado");
     }
 }

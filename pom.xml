@@ -7,7 +7,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.0</version>
-        <relativePath />
+        <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.fiap.producao</groupId>
@@ -295,9 +295,6 @@
                                     <goal>report</goal>
                                 </goals>
                                 <configuration>
-                                    <formats>
-                                        <format>XML</format>
-                                    </formats>
                                     <excludes>
                                         <exclude>br/com/fiap/fasteats/config/**</exclude>
                                         <exclude>br/com/fiap/fasteats/dataprovider/client/mapper/**</exclude>

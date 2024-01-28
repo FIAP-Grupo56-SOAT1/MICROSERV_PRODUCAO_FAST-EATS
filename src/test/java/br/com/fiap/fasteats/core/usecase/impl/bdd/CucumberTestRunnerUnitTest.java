@@ -1,4 +1,4 @@
-package br.com.fiap.fasteats.bdd;
+package br.com.fiap.fasteats.core.usecase.impl.bdd;
 
 
 import org.junit.platform.suite.api.IncludeEngines;

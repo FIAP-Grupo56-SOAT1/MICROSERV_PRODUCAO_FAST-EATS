@@ -54,13 +54,4 @@ public class StatusPedido {
     public int hashCode() {
         return Objects.hash(id, nome, ativo);
     }
-
-    @Override
-    public String toString() {
-        return "StatusPedido{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", ativo=" + ativo +
-                '}';
-    }
 }

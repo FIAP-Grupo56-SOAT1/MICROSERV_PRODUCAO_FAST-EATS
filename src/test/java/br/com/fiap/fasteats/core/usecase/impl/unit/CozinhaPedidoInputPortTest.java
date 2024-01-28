@@ -11,11 +11,8 @@ import br.com.fiap.fasteats.core.usecase.AlterarPedidoStatusInputPort;
 import br.com.fiap.fasteats.core.usecase.impl.AlterarPedidoStatusUseCase;
 import br.com.fiap.fasteats.core.usecase.impl.CozinhaPedidoUseCase;
 import br.com.fiap.fasteats.core.validator.AlterarPedidoStatusValidator;
-import br.com.fiap.fasteats.dataprovider.client.PedidoIntegration;
-import br.com.fiap.fasteats.dataprovider.client.StatusPedidoIntegration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -27,7 +24,8 @@ import java.util.Optional;
 
 import static br.com.fiap.fasteats.core.constants.ProcessoCozinhaConstants.*;
 import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -85,7 +83,7 @@ class CozinhaPedidoInputPortTest {
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         pedidoId,
-                        STATUS_PEDIDO_EM_PREPARO,RECEBIDO),
+                        STATUS_PEDIDO_EM_PREPARO, STATUS_COZINHA_RECEBIDO),
 
                 new CozinhaPedido("65b1762af79a235f75630fa7",
                         LocalDateTime.now(),
@@ -93,7 +91,7 @@ class CozinhaPedidoInputPortTest {
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         2l,
-                        STATUS_PEDIDO_EM_PREPARO,INICIO_PREPARO),
+                        STATUS_PEDIDO_EM_PREPARO, STATUS_COZINHA_INICIO_PREPARO),
 
                 new CozinhaPedido( "65b1762af79a235f75630fa8",
                         LocalDateTime.now(),
@@ -101,7 +99,7 @@ class CozinhaPedidoInputPortTest {
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         3l,
-                        STATUS_PEDIDO_EM_PREPARO,FINALIZANDO_PREPARO),
+                        STATUS_PEDIDO_EM_PREPARO, STATUS_COZINHA_FINALIZANDO_PREPARO),
 
                 new CozinhaPedido( "65b1762af79a235f75630fa9",
                         LocalDateTime.now(),
@@ -109,7 +107,7 @@ class CozinhaPedidoInputPortTest {
                         ,LocalDateTime.now(),
                         LocalDateTime.now(),
                         4l,
-                        STATUS_PEDIDO_EM_PREPARO,ENTREGAR_PEDIDO)
+                        STATUS_PEDIDO_EM_PREPARO, STATUS_COZINHA_ENTREGAR_PEDIDO)
         );
 
         when(cozinhaPedidoOutputPort.listar()).thenReturn(listCozinhaPedido);
@@ -133,7 +131,7 @@ class CozinhaPedidoInputPortTest {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                pedidoId,STATUS_PEDIDO_EM_PREPARO,RECEBIDO);
+                pedidoId,STATUS_PEDIDO_EM_PREPARO, STATUS_COZINHA_RECEBIDO);
 
         when(cozinhaPedidoOutputPort.consultar(cozinhaId)).thenReturn(Optional.of(cozinhaPedido));
 
@@ -164,7 +162,7 @@ class CozinhaPedidoInputPortTest {
                 LocalDateTime.now(),
                 pedidoId,
                 STATUS_PEDIDO_EM_PREPARO,
-                RECEBIDO);
+                STATUS_COZINHA_RECEBIDO);
 
         when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
 
@@ -195,7 +193,7 @@ class CozinhaPedidoInputPortTest {
         CozinhaPedido cozinhaPedido = new CozinhaPedido();
         cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(RECEBIDO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_RECEBIDO);
         cozinhaPedido.setDataRecebimentoDoPedido(dateTimeNow);
 
         when(alterarPedidoStatusInputPort.recebido(pedidoId)).thenReturn(pedido);
@@ -234,7 +232,7 @@ class CozinhaPedidoInputPortTest {
         CozinhaPedido cozinhaPedido = new CozinhaPedido();
         cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(RECEBIDO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_RECEBIDO);
 
         when(alterarPedidoStatusInputPort.emPreparo(pedidoId)).thenReturn(pedido);
         when(cozinhaPedidoOutputPort.salvar(cozinhaPedido)).thenReturn(cozinhaPedido);
@@ -276,7 +274,7 @@ class CozinhaPedidoInputPortTest {
         CozinhaPedido cozinhaPedido = new CozinhaPedido();
         cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(RECEBIDO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_RECEBIDO);
 
         when(alterarPedidoStatusInputPort.pronto(pedidoId)).thenReturn(pedido);
         when(cozinhaPedidoOutputPort.salvar(cozinhaPedido)).thenReturn(cozinhaPedido);
@@ -318,7 +316,7 @@ class CozinhaPedidoInputPortTest {
         CozinhaPedido cozinhaPedido = new CozinhaPedido();
         cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(pedido.getStatusPedido());
-        cozinhaPedido.setProcessoAtual(ENTREGAR_PEDIDO);
+        cozinhaPedido.setProcessoAtual(STATUS_COZINHA_ENTREGAR_PEDIDO);
 
         when(alterarPedidoStatusInputPort.finalizado(pedidoId)).thenReturn(pedido);
         when(cozinhaPedidoOutputPort.salvar(cozinhaPedido)).thenReturn(cozinhaPedido);
