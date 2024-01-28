@@ -56,7 +56,7 @@ class AlterarPedidoStatusUseCaseUnitTest {
         var pedidoRecebido = alterarPedidoStatusUseCase.recebido(PEDIDO_ID);
 
         //Assert
-        assertEquals(STATUS_PEDIDO_RECEBIDO,pedidoRecebido.getStatusPedido());
+        assertEquals(STATUS_PEDIDO_RECEBIDO, pedidoRecebido.getStatusPedido());
         assertNotNull(pedidoRecebido.getDataHoraRecebimento());
 
         verify(alterarPedidoStatusValidator).validarRecebido(PEDIDO_ID);
@@ -89,7 +89,7 @@ class AlterarPedidoStatusUseCaseUnitTest {
         var pedidoRecebido = alterarPedidoStatusUseCase.emPreparo(PEDIDO_ID);
 
         //Assert
-        assertEquals(STATUS_PEDIDO_RECEBIDO,pedidoRecebido.getStatusPedido());
+        assertEquals(STATUS_PEDIDO_RECEBIDO, pedidoRecebido.getStatusPedido());
 
         verify(alterarPedidoStatusValidator).validarEmPreparo(PEDIDO_ID);
         verify(alterarPedidoStatusOutputPort).emPreparo(PEDIDO_ID);
@@ -120,7 +120,7 @@ class AlterarPedidoStatusUseCaseUnitTest {
         var pedidoRecebido = alterarPedidoStatusUseCase.pronto(PEDIDO_ID);
 
         //Assert
-        assertEquals(STATUS_PEDIDO_PRONTO,pedidoRecebido.getStatusPedido());
+        assertEquals(STATUS_PEDIDO_PRONTO, pedidoRecebido.getStatusPedido());
 
         verify(alterarPedidoStatusValidator).validarPronto(PEDIDO_ID);
         verify(alterarPedidoStatusOutputPort).pronto(PEDIDO_ID);
@@ -150,11 +150,12 @@ class AlterarPedidoStatusUseCaseUnitTest {
         var pedidoRecebido = alterarPedidoStatusUseCase.finalizado(PEDIDO_ID);
 
         //Assert
-        assertEquals(STATUS_PEDIDO_FINALIZADO,pedidoRecebido.getStatusPedido());
+        assertEquals(STATUS_PEDIDO_FINALIZADO, pedidoRecebido.getStatusPedido());
 
         verify(alterarPedidoStatusValidator).validarFinalizado(PEDIDO_ID);
         verify(alterarPedidoStatusOutputPort).finalizado(PEDIDO_ID);
     }
+
     @Test
     void finalizado_erro() {
         //Arrange

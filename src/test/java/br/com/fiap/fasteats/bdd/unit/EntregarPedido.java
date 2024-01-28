@@ -17,16 +17,21 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static br.com.fiap.fasteats.core.constants.StatusPedidoConstants.STATUS_PEDIDO_RECEBIDO;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-public class StepDefinition {
+public class EntregarPedido {
 
     AutoCloseable openMocks;
 
     LocalDateTime dateTimeNow = LocalDateTime.now();
 
     Pedido pedido;
+
+    Pedido pedidoRecebido;
 
     @Before
     public void setUp() {
@@ -53,15 +58,18 @@ public class StepDefinition {
     public void que_o_pedido_e_criado_e_enviado_para_cozinha() {
         pedido = getPedido();
         when(alterarPedidoStatusOutputPort.recebido(PEDIDO_ID)).thenReturn(Optional.of(pedido));
-        var pedidoRecebido = alterarPedidoStatusUseCase.recebido(PEDIDO_ID);
     }
     @Quando("o pedido e recebido e processado na cozinha")
     public void o_pedido_e_recebido_e_processado_na_cozinha() {
+        pedidoRecebido = alterarPedidoStatusUseCase.recebido(PEDIDO_ID);
+        assertEquals(STATUS_PEDIDO_RECEBIDO,pedidoRecebido.getStatusPedido());
+        assertNotNull(pedidoRecebido.getDataHoraRecebimento());
 
     }
     @Entao("o pedido e definido como status recebido")
     public void o_pedido_e_definido_como_status_recebido() {
-
+        verify(alterarPedidoStatusValidator).validarRecebido(PEDIDO_ID);
+        verify(alterarPedidoStatusOutputPort).recebido(PEDIDO_ID);
     }
 
 
