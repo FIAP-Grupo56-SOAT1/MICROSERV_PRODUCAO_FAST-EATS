@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("cozinha-pedido")
 @RequiredArgsConstructor
-@Tag(name = "CozinhaPedidoEntity", description = "Controller que gerencia o preparo de pedidos na cozinha")
+@Tag(name = "Cozinha Pedido", description = "Controller que gerencia o preparo de pedidos na cozinha")
 public class CozinhaPedidoController {
     private final CozinhaPedidoInputPort cozinhaPedidoInputPort;
     private final CozinhaPedidoResponseMapper cozinhaPedidoResponseMapper;
@@ -57,8 +57,14 @@ public class CozinhaPedidoController {
         List<CozinhaPedidoResponse> cozinhaPedidoResponseList = cozinhaPedidoResponseMapper.toCozinhaPedidoResponseList(cozinhaPedidoList);
         return ResponseEntity.ok().body(cozinhaPedidoResponseList);
     }
+    @GetMapping("{cozinhaId}")
+    public ResponseEntity<CozinhaPedidoResponse> consultarPorIdPedido(@PathVariable("cozinhaId") String cozinhaId) {
+        CozinhaPedido cozinhaPedido = cozinhaPedidoInputPort.consultar(cozinhaId);
+        CozinhaPedidoResponse cozinhaPedidoResponse = cozinhaPedidoResponseMapper.toCozinhaPedidoResponse(cozinhaPedido);
+        return ResponseEntity.ok().body(cozinhaPedidoResponse);
+    }
 
-    @GetMapping("{pedidoId}")
+    @GetMapping("pedido/{pedidoId}")
     public ResponseEntity<CozinhaPedidoResponse> consultarPorIdPedido(@PathVariable("pedidoId") Long pedidoId) {
         CozinhaPedido cozinhaPedido = cozinhaPedidoInputPort.consultarPorIdPedido(pedidoId);
         CozinhaPedidoResponse cozinhaPedidoResponse = cozinhaPedidoResponseMapper.toCozinhaPedidoResponse(cozinhaPedido);

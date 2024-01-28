@@ -135,6 +135,27 @@ class CozinhaPedidoControllerUnitTest {
     }
 
     @Test
+    void consultar_DeveRetornarCozinhaPedidoResponse_QuandoComunicacaoBemSucedida() {
+        // Arrange
+        String cozinhaId = "12345";
+        CozinhaPedido cozinhaPedido = new CozinhaPedido();
+        CozinhaPedidoResponse cozinhaPedidoResponse = new CozinhaPedidoResponse();
+
+        when(cozinhaPedidoInputPort.consultar(cozinhaId)).thenReturn(cozinhaPedido);
+        when(cozinhaPedidoResponseMapper.toCozinhaPedidoResponse(cozinhaPedido)).thenReturn(cozinhaPedidoResponse);
+
+        // Act
+        ResponseEntity<CozinhaPedidoResponse> response = cozinhaPedidoController.consultarPorIdPedido(cozinhaId);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(cozinhaPedidoResponse, response.getBody());
+        verify(cozinhaPedidoInputPort, times(1)).consultar(cozinhaId);
+        verify(cozinhaPedidoResponseMapper, times(1)).toCozinhaPedidoResponse(cozinhaPedido);
+    }
+
+    @Test
     void consultarPorIdPedido_DeveRetornarCozinhaPedidoResponse_QuandoComunicacaoBemSucedida() {
         // Arrange
         Long pedidoId = 1L;
