@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
-public class EmPreparoCozinha {
+public class PedidoEntregue {
 
     AutoCloseable openMocks;
 
@@ -54,21 +54,22 @@ public class EmPreparoCozinha {
 
     private final Long PEDIDO_ID = 1L;
 
-    @Dado("que o pedido está com status recebido")
-    public void que_o_pedido_está_com_status_recebido() {
+    @Dado("que o pedido e criado e enviado para cozinha")
+    public void que_o_pedido_e_criado_e_enviado_para_cozinha() {
         pedido = getPedido();
-        when(alterarPedidoStatusOutputPort.emPreparo(PEDIDO_ID)).thenReturn(Optional.of(pedido));
+        when(alterarPedidoStatusOutputPort.recebido(PEDIDO_ID)).thenReturn(Optional.of(pedido));
     }
-    @Quando("o pedido e preparado na cozinha")
-    public void o_pedido_e_preparado_na_cozinha() {
-        pedidoRecebido = alterarPedidoStatusUseCase.emPreparo(PEDIDO_ID);
-    }
-    @Entao("o pedido e definido como status em preparo")
-    public void o_pedido_e_definido_como_status_em_preparo() {
+    @Quando("o pedido e recebido e processado na cozinha")
+    public void o_pedido_e_recebido_e_processado_na_cozinha() {
+        pedidoRecebido = alterarPedidoStatusUseCase.recebido(PEDIDO_ID);
         assertEquals(STATUS_PEDIDO_RECEBIDO,pedidoRecebido.getStatusPedido());
+        assertNotNull(pedidoRecebido.getDataHoraRecebimento());
 
-        verify(alterarPedidoStatusValidator).validarEmPreparo(PEDIDO_ID);
-        verify(alterarPedidoStatusOutputPort).emPreparo(PEDIDO_ID);
+    }
+    @Entao("o pedido e definido como status recebido")
+    public void o_pedido_e_definido_como_status_recebido() {
+        verify(alterarPedidoStatusValidator).validarRecebido(PEDIDO_ID);
+        verify(alterarPedidoStatusOutputPort).recebido(PEDIDO_ID);
     }
 
 
@@ -77,7 +78,7 @@ public class EmPreparoCozinha {
         pedido.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
         pedido.setId(PEDIDO_ID);
         pedido.setDataHoraRecebimento(dateTimeNow);
-        pedido.setDataHoraCriado(dateTimeNow);
+
         return pedido;
     }
 
