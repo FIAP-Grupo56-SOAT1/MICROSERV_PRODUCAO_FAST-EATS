@@ -3,15 +3,14 @@
 name: Deploy imagem docker no ECR AWS
 
 # quando pull request main for fechado
-#on:
-#  # Triggers the workflow on push or pull request events but only for the master branch
-#  pull_request:
-#    branches: ['main']
-#    types: ['closed']
-
-# execução manual
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  pull_request:
+    branches: ['main']
+    types: ['closed']
+
   workflow_dispatch:
+
 
 
 jobs:
@@ -48,4 +47,5 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker tag -t $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_VERSION
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_VERSION
