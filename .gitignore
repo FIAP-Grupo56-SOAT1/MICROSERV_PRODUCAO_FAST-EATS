@@ -28,3 +28,5 @@ replay_pid*
 .project
 
 /allure-results/
+/.idea/
+/api-producao.iml
