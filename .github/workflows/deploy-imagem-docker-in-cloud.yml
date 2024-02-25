@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Criar imagem docker para ECR AWS
+name: Deploy imagem docker no ECR AWS
 
 # quando pull request main for fechado
 #on:
@@ -43,7 +43,9 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: microservico-cozinha
-        IMAGE_TAG: microservico-cozinha:latest
+        IMAGE_TAG: latest
+        IMAGE_TAG_VERSION: ${{ github.run_number }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_VERSION
