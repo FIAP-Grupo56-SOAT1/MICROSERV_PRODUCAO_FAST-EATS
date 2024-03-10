@@ -6,5 +6,12 @@ import java.util.Optional;
 
 public interface PedidoIntegration {
     Optional<PedidoResponse> consultar(Long pedidoId);
-    void atualizarStatus(Long pedidoId, Long idStatus);
+
+    void pedidoRecebido(Long pedidoId);
+
+    void pedidoEmPreparo(Long pedidoId);
+
+    void pedidoPronto(Long pedidoId);
+
+    void pedidoFinalizado(Long pedidoId);
 }
