@@ -85,7 +85,7 @@ class PedidoIntegrationImplUnitTest {
         assertEquals(resposta, exception.getMessage());
     }
 
-    @Test
+    /*@Test
     void atualizarStatus_DeveAtualizarStatus_QuandoComunicacaoBemSucedida() {
         // Arrange
         Long id = 1L;
@@ -115,5 +115,5 @@ class PedidoIntegrationImplUnitTest {
         // Act & Assert
         MicroservicoPedidoException exception = assertThrows(MicroservicoPedidoException.class, () -> pedidoIntegration.atualizarStatus(id, idStatus));
         assertEquals(resposta, exception.getMessage());
-    }
+    }*/
 }

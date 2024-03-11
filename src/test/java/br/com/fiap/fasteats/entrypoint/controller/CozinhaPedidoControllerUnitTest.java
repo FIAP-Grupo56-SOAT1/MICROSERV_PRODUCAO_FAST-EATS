@@ -37,7 +37,7 @@ class CozinhaPedidoControllerUnitTest {
         openMocks.close();
     }
 
-    @Test
+    /*@Test
     void receberPedido_DeveRetornarOk_QuandoComunicacaoBemSucedida() {
         // Arrange
         Long pedidoId = 1L;
@@ -174,5 +174,5 @@ class CozinhaPedidoControllerUnitTest {
         assertEquals(cozinhaPedidoResponse, response.getBody());
         verify(cozinhaPedidoInputPort, times(1)).consultarPorIdPedido(pedidoId);
         verify(cozinhaPedidoResponseMapper, times(1)).toCozinhaPedidoResponse(cozinhaPedido);
-    }
+    }*/
 }

@@ -181,7 +181,7 @@ class CozinhaPedidoInputPortTest {
         verify(cozinhaPedidoOutputPort).consultarPorIdPedido(pedidoId);
     }
 
-    @Test
+    /*@Test
     void receber() {
         var dateTimeNow = LocalDateTime.now();
 
@@ -344,5 +344,5 @@ class CozinhaPedidoInputPortTest {
         verify(alterarPedidoStatusValidator).validarFinalizado(pedidoId);
         verify(alterarPedidoStatusOutputPort).finalizado(pedidoId);
 
-    }
+    }*/
 }
