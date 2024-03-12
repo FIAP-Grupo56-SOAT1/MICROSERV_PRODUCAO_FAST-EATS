@@ -20,7 +20,6 @@ public class CompensarErroAlterarStatusPedidoUseCase implements CompensarErroAlt
     @Override
     public void pendente(Long pedidoId) {
         CozinhaPedido cozinhaPedido = consultarPorIdPedido(pedidoId);
-        cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(STATUS_PEDIDO_PAGO);
         cozinhaPedido.setProcessoAtual(STATUS_COZINHA_PENDENTE);
         cozinhaPedido.setDataRecebimentoDoPedido(null);
@@ -30,7 +29,6 @@ public class CompensarErroAlterarStatusPedidoUseCase implements CompensarErroAlt
     @Override
     public void recebido(Long pedidoId) {
         CozinhaPedido cozinhaPedido = consultarPorIdPedido(pedidoId);
-        cozinhaPedido.setIdPedido(pedidoId);
         cozinhaPedido.setStatusPedido(STATUS_PEDIDO_RECEBIDO);
         cozinhaPedido.setProcessoAtual(STATUS_COZINHA_RECEBIDO);
         cozinhaPedido.setDataRecebimentoDoPedido(LocalDateTime.now());
@@ -61,7 +59,7 @@ public class CompensarErroAlterarStatusPedidoUseCase implements CompensarErroAlt
         cozinhaPedidoOutputPort.salvar(cozinhaPedido);
     }
 
-    public CozinhaPedido consultarPorIdPedido(Long pedidoId) {
+    private CozinhaPedido consultarPorIdPedido(Long pedidoId) {
         return cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)
                 .orElseThrow(() -> cozinhaPedidoNaoEncontradoPorPedidoId(pedidoId));
     }

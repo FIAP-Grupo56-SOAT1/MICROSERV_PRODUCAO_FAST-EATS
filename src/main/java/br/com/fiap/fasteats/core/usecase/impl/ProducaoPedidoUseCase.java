@@ -68,7 +68,7 @@ public class ProducaoPedidoUseCase implements ProducaoPedidoInputPort {
         return iniciarProcessoOutputPort.entregarPedido(cozinhaPedido);
     }
 
-    public CozinhaPedido consultarPorIdPedido(Long pedidoId) {
+    private CozinhaPedido consultarPorIdPedido(Long pedidoId) {
         return cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)
                 .orElseThrow(() -> cozinhaPedidoNaoEncontradoPorPedidoId(pedidoId));
     }
