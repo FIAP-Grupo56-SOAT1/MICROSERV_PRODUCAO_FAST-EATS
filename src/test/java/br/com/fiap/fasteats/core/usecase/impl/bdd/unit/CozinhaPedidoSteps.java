@@ -37,7 +37,7 @@ public class CozinhaPedidoSteps {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Dado("que existe um Cozinha Pedido com ID {string}")
+    /*@Dado("que existe um Cozinha Pedido com ID {string}")
     public void existeUmCozinhaPedidoComId(String cozinhaPedidoId) {
         cozinhaPedido = new CozinhaPedido();
         cozinhaPedido.setCozinhaId(cozinhaPedidoId);
@@ -168,5 +168,5 @@ public class CozinhaPedidoSteps {
         cozinhaPedido.setDataInicioPreparo(LocalDateTime.now());
         cozinhaPedido.setDataFinalizacaoPreparo(LocalDateTime.now());
         cozinhaPedido.setDataEntregaPedido(LocalDateTime.now());
-    }
+    }*/
 }

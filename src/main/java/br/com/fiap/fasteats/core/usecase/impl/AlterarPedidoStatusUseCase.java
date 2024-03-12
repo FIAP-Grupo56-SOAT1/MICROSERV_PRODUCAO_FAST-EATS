@@ -1,8 +1,6 @@
 package br.com.fiap.fasteats.core.usecase.impl;
 
 import br.com.fiap.fasteats.core.dataprovider.AlterarPedidoStatusOutputPort;
-import br.com.fiap.fasteats.core.domain.exception.PedidoNotFound;
-import br.com.fiap.fasteats.core.domain.model.Pedido;
 import br.com.fiap.fasteats.core.usecase.AlterarPedidoStatusInputPort;
 import br.com.fiap.fasteats.core.validator.AlterarPedidoStatusValidator;
 
@@ -17,34 +15,26 @@ public class AlterarPedidoStatusUseCase implements AlterarPedidoStatusInputPort 
     }
 
     @Override
-    public Pedido recebido(Long pedidoId) {
+    public void recebido(Long pedidoId) {
         alterarPedidoStatusValidator.validarRecebido(pedidoId);
-        return alterarPedidoStatusOutputPort.recebido(pedidoId)
-                .orElseThrow(() -> pedidoNaoEncontrado(pedidoId));
+        alterarPedidoStatusOutputPort.recebido(pedidoId);
     }
 
     @Override
-    public Pedido emPreparo(Long pedidoId) {
+    public void emPreparo(Long pedidoId) {
         alterarPedidoStatusValidator.validarEmPreparo(pedidoId);
-        return alterarPedidoStatusOutputPort.emPreparo(pedidoId)
-                .orElseThrow(() -> pedidoNaoEncontrado(pedidoId));
+        alterarPedidoStatusOutputPort.emPreparo(pedidoId);
     }
 
     @Override
-    public Pedido pronto(Long pedidoId) {
+    public void pronto(Long pedidoId) {
         alterarPedidoStatusValidator.validarPronto(pedidoId);
-        return alterarPedidoStatusOutputPort.pronto(pedidoId)
-                .orElseThrow(() -> pedidoNaoEncontrado(pedidoId));
+        alterarPedidoStatusOutputPort.pronto(pedidoId);
     }
 
     @Override
-    public Pedido finalizado(Long pedidoId) {
+    public void finalizado(Long pedidoId) {
         alterarPedidoStatusValidator.validarFinalizado(pedidoId);
-        return alterarPedidoStatusOutputPort.finalizado(pedidoId)
-                .orElseThrow(() -> pedidoNaoEncontrado(pedidoId));
-    }
-
-    private RuntimeException pedidoNaoEncontrado(Long pedidoId) {
-        return new PedidoNotFound("Pedido " + pedidoId + " não encontrado");
+        alterarPedidoStatusOutputPort.finalizado(pedidoId);
     }
 }

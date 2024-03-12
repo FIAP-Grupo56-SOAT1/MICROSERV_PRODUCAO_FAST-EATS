@@ -10,12 +10,4 @@ public interface CozinhaPedidoInputPort {
     CozinhaPedido consultar(String cozinhaPedidoId);
 
     CozinhaPedido consultarPorIdPedido(Long pedidoId);
-
-    CozinhaPedido receber(Long pedidoId);
-
-    CozinhaPedido iniciarPreparo(Long pedidoId);
-
-    CozinhaPedido finalizarPreparo(Long pedidoId);
-
-    CozinhaPedido retirar(Long pedidoId);
 }

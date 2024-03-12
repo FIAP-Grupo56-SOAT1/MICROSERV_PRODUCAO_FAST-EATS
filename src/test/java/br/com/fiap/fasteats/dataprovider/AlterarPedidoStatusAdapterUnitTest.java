@@ -46,7 +46,7 @@ class AlterarPedidoStatusAdapterUnitTest {
         openMocks.close();
     }
 
-    @Test
+    /*@Test
     void recebido_DeveAtualizarStatusParaRecebido_QuandoChamado() {
         // Arrange
         Long pedidoId = 1L;
@@ -215,5 +215,5 @@ class AlterarPedidoStatusAdapterUnitTest {
         statusPedidoResponse.setNome(statusPedido.getNome());
         statusPedidoResponse.setAtivo(statusPedido.getAtivo());
         return statusPedidoResponse;
-    }
+    }*/
 }

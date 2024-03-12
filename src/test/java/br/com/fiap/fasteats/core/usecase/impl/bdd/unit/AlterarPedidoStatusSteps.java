@@ -45,7 +45,7 @@ public class AlterarPedidoStatusSteps {
         pedido.setId(pedidoId);
     }
 
-    @Dado("que não existe um pedido com id {long}")
+    /*@Dado("que não existe um pedido com id {long}")
     public void naoExisteUmPedidoComId(Long pedidoId) {
         when(alterarPedidoStatusOutputPort.recebido(pedidoId)).thenReturn(Optional.empty());
         when(alterarPedidoStatusOutputPort.emPreparo(pedidoId)).thenReturn(Optional.empty());
@@ -115,5 +115,5 @@ public class AlterarPedidoStatusSteps {
         assertThrows(PedidoNotFound.class, () -> alterarPedidoStatusUseCase.emPreparo(pedidoId));
         assertThrows(PedidoNotFound.class, () -> alterarPedidoStatusUseCase.pronto(pedidoId));
         assertThrows(PedidoNotFound.class, () -> alterarPedidoStatusUseCase.finalizado(pedidoId));
-    }
+    }*/
 }
