@@ -11,4 +11,4 @@ ENV PORT=27017
 ENV HOST=localhost
 ENV URL_PEDIDO_SERVICE='http://localhost:8082'
 ENV URL_COZINHA_PEDIDO_SERVICE='http://localhost:8083'
-ENTRYPOINT ["java", "-jar","/home/app/target/api-producao-1.0.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar","/home/app/target/api-producao-2.0.0-SNAPSHOT.jar"]
