@@ -1,15 +1,18 @@
 package br.com.fiap.fasteats.dataprovider.client.service;
 
+import br.com.fiap.fasteats.dataprovider.client.exception.AwsSQSException;
 import br.com.fiap.fasteats.dataprovider.client.exception.MicroservicoPedidoException;
+import br.com.fiap.fasteats.dataprovider.client.request.AtualizarStatusPedidoRequest;
 import br.com.fiap.fasteats.dataprovider.client.response.PedidoResponse;
+import com.google.gson.Gson;
+import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
@@ -21,11 +24,9 @@ class PedidoIntegrationImplUnitTest {
     @Mock
     private RestTemplate restTemplate;
     @Mock
-    private Logger logger;
+    private SqsTemplate sqsTemplate;
     @InjectMocks
     private PedidoIntegrationImpl pedidoIntegration;
-    @Value("${URL_PEDIDO_SERVICE}")
-    private String URL_BASE;
     AutoCloseable openMocks;
 
     @BeforeEach
@@ -39,81 +40,101 @@ class PedidoIntegrationImplUnitTest {
     }
 
     @Test
-    void consultar_DeveRetornarPedidoResponse_QuandoComunicacaoBemSucedida() {
+    @DisplayName("Consultar Pedido")
+    void deveRetornarPedido_QuandoConsultar() {
         // Arrange
-        Long id = 1L;
-        PedidoResponse expectedResponse = new PedidoResponse();
-        String url = String.format("%s/pedidos/%d", URL_BASE, id);
-
-        when(restTemplate.getForObject(url, PedidoResponse.class, id)).thenReturn(expectedResponse);
+        Long pedidoId = 1L;
+        PedidoResponse pedidoResponse = new PedidoResponse();
+        when(restTemplate.getForObject(anyString(), eq(PedidoResponse.class), eq(pedidoId))).thenReturn(pedidoResponse);
 
         // Act
-        Optional<PedidoResponse> result = pedidoIntegration.consultar(id);
+        Optional<PedidoResponse> result = pedidoIntegration.consultar(pedidoId);
 
         // Assert
         assertTrue(result.isPresent());
-        assertEquals(expectedResponse, result.get());
+        assertEquals(pedidoResponse, result.get());
     }
 
     @Test
-    void consultar_DeveRetornarVazio_QuandoPedidoNaoEncontrado() {
+    @DisplayName("Erro ao Consultar Pedido")
+    void deveLancarExcecao_QuandoConsultarComErro() {
         // Arrange
-        Long id = 1L;
-        String url = String.format("%s/pedidos/%d", URL_BASE, id);
-
-        when(restTemplate.getForObject(url, PedidoResponse.class, id)).thenReturn(null);
-
-        // Act
-        Optional<PedidoResponse> result = pedidoIntegration.consultar(id);
-
-        // Assert
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    void consultar_DeveLancarMicroservicoPedidoException_QuandoErroNaComunicacao() {
-        // Arrange
-        Long id = 1L;
-        String url = String.format("%s/pedidos/%d", URL_BASE, id);
-        String mensagemErro = "Serviço indisponível";
-        String resposta = String.format("Erro na comunicação com o microserviço Pedido: %s", mensagemErro);
-        when(restTemplate.getForObject(url, PedidoResponse.class, id)).thenThrow(new RuntimeException(mensagemErro));
-        when(logger.isErrorEnabled()).thenReturn(true);
+        Long pedidoId = 1L;
+        when(restTemplate.getForObject(anyString(), eq(PedidoResponse.class), eq(pedidoId))).thenThrow(RuntimeException.class);
 
         // Act & Assert
-        MicroservicoPedidoException exception = assertThrows(MicroservicoPedidoException.class, () -> pedidoIntegration.consultar(id));
-        assertEquals(resposta, exception.getMessage());
-    }
-
-    /*@Test
-    void atualizarStatus_DeveAtualizarStatus_QuandoComunicacaoBemSucedida() {
-        // Arrange
-        Long id = 1L;
-        Long idStatus = 2L;
-        String url = String.format("%s/pedidos/%d/status/%d", URL_BASE, id, idStatus);
-
-        doNothing().when(restTemplate).put(url, null, id, idStatus);
-
-        // Act
-        assertDoesNotThrow(() -> pedidoIntegration.atualizarStatus(id, idStatus));
-
-        // Assert
-        verify(restTemplate, times(1)).put(url, null, id, idStatus);
+        assertThrows(MicroservicoPedidoException.class, () -> pedidoIntegration.consultar(pedidoId));
     }
 
     @Test
-    void atualizarStatus_DeveLancarMicroservicoPedidoException_QuandoErroNaComunicacao() {
+    @DisplayName("Pedido Recebido")
+    void deveChamarPedidoRecebido_QuandoRecebido() {
         // Arrange
-        Long id = 1L;
-        Long idStatus = 2L;
-        String url = String.format("%s/pedidos/%d/status/%d", URL_BASE, id, idStatus);
-        String mensagemErro = "Serviço indisponível";
-        String resposta = String.format("Erro na comunicação com o microserviço Pedido: %s", mensagemErro);
-        doThrow(new RuntimeException(mensagemErro)).when(restTemplate).put(url, null, id, idStatus);
-        when(logger.isErrorEnabled()).thenReturn(true);
+        Long pedidoId = 1L;
+        String jsonAtualizarStatusPedido = getJsonAtualizarStatusPedido(pedidoId);
+
+        // Act
+        pedidoIntegration.pedidoRecebido(pedidoId);
+
+        // Assert
+        verify(sqsTemplate, times(1)).send(any(), eq(jsonAtualizarStatusPedido));
+    }
+
+    @Test
+    @DisplayName("Pedido Em Preparo")
+    void deveChamarPedidoEmPreparo_QuandoEmPreparo() {
+        // Arrange
+        Long pedidoId = 1L;
+        String jsonAtualizarStatusPedido = getJsonAtualizarStatusPedido(pedidoId);
+
+        // Act
+        pedidoIntegration.pedidoEmPreparo(pedidoId);
+
+        // Assert
+        verify(sqsTemplate, times(1)).send(any(), eq(jsonAtualizarStatusPedido));
+    }
+
+    @Test
+    @DisplayName("Pedido Pronto")
+    void deveChamarPedidoPronto_QuandoPronto() {
+        // Arrange
+        Long pedidoId = 1L;
+        String jsonAtualizarStatusPedido = getJsonAtualizarStatusPedido(pedidoId);
+
+        // Act
+        pedidoIntegration.pedidoPronto(pedidoId);
+
+        // Assert
+        verify(sqsTemplate, times(1)).send(any(), eq(jsonAtualizarStatusPedido));
+    }
+
+    @Test
+    @DisplayName("Pedido Finalizado")
+    void deveChamarPedidoFinalizado_QuandoFinalizado() {
+        // Arrange
+        Long pedidoId = 1L;
+        String jsonAtualizarStatusPedido = getJsonAtualizarStatusPedido(pedidoId);
+
+        // Act
+        pedidoIntegration.pedidoFinalizado(pedidoId);
+
+        // Assert
+        verify(sqsTemplate, times(1)).send(any(), eq(jsonAtualizarStatusPedido));
+    }
+
+    @Test
+    @DisplayName("Erro Enviar Para Fila Pedido Status")
+    void deveLancarExcecao_QuandoEnviarParaFilaPedidoStatusComErro() {
+        // Arrange
+        Long pedidoId = 1L;
+        doThrow(RuntimeException.class).when(sqsTemplate).send(any(), anyString());
 
         // Act & Assert
-        MicroservicoPedidoException exception = assertThrows(MicroservicoPedidoException.class, () -> pedidoIntegration.atualizarStatus(id, idStatus));
-        assertEquals(resposta, exception.getMessage());
-    }*/
+        assertThrows(AwsSQSException.class, () -> pedidoIntegration.pedidoRecebido(pedidoId));
+    }
+
+    private String getJsonAtualizarStatusPedido(Long pedidoId) {
+        AtualizarStatusPedidoRequest request = new AtualizarStatusPedidoRequest(pedidoId);
+        return new Gson().toJson(request);
+    }
 }
