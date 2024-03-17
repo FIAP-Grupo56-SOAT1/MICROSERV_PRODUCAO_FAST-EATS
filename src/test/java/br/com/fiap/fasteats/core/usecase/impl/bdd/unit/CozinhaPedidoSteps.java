@@ -42,16 +42,6 @@ public class CozinhaPedidoSteps {
         when(cozinhaPedidoOutputPort.consultar(cozinhaPedidoId)).thenReturn(Optional.of(cozinhaPedido));
     }
 
-    @Dado("que existe um Pedido com ID {long}")
-    public void existeUmPedidoComId(Long pedidoId) {
-        configureMockForStatus(pedidoId, "Recebido");
-    }
-
-    @Dado("existe um Cozinha Pedido associado ao Pedido com ID {long}")
-    public void existeUmCozinhaPedidoAssociadoAoPedidoComId(Long pedidoId) {
-        configureMockForStatus(pedidoId, "Recebido");
-        when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
-    }
 
     @Quando("o usuário consulta o Cozinha Pedido por ID {string}")
     public void usuarioConsultaCozinhaPedidoPorId(String cozinhaPedidoId) {
@@ -84,17 +74,8 @@ public class CozinhaPedidoSteps {
         assertEquals(pedidoId, cozinhaPedido.getIdPedido());
     }
 
-    @Entao("é retornado o Cozinha Pedido atualizado com o status {string}")
-    public void retornadoCozinhaPedidoAtualizadoComStatus(String status) {
-        assertNotNull(cozinhaPedidoRetornado);
-        assertEquals(status, cozinhaPedidoRetornado.getProcessoAtual());
-    }
 
-    @Entao("o status do pedido foi atualizado para {string}")
-    public void statusPedidoAtualizadoPara(String status) {
-        assertNotNull(cozinhaPedidoRetornado);
-        assertEquals(status, cozinhaPedidoRetornado.getStatusPedido());
-    }
+
 
     private void configureMockForStatus(Long pedidoId, String status) {
         Pedido pedido = new Pedido();

@@ -25,6 +25,8 @@ Funcionalidade: Gerenciamento de Cozinha Pedido
     Então é retornado o Cozinha Pedido atualizado com o status "INICIO_PREPARO"
     E o status do pedido foi atualizado para "EM_PREPARO"
 
+
+
   Cenário: Finalizar Preparo na Cozinha
     Dado que existe um Pedido com ID 1
     E existe um Cozinha Pedido associado ao Pedido com ID 1
