@@ -18,13 +18,6 @@ public class ProducaoPedidoController {
     private final ProducaoPedidoInputPort producaoPedidoInputPort;
     private final CozinhaPedidoResponseMapper cozinhaPedidoResponseMapper;
 
-    @PostMapping("{pedidoId}/receber-pedido")
-    @Operation(summary = "Receber pedido", description = "Receber o pedido.")
-    public ResponseEntity<Void> receberPedido(@PathVariable final Long pedidoId) {
-        producaoPedidoInputPort.receber(pedidoId);
-        return ResponseEntity.ok().build();
-    }
-
     @PatchMapping("{pedidoId}/iniciar-preparo")
     @Operation(summary = "Iniciar preparo", description = "Inicia o preparo de um pedido.")
     public ResponseEntity<CozinhaPedidoResponse> iniciarPreparo(@PathVariable final Long pedidoId) {
