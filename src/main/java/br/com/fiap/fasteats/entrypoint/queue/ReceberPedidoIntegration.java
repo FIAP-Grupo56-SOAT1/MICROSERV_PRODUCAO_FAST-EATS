@@ -1,7 +1,6 @@
-package br.com.fiap.fasteats.dataprovider.client.service;
+package br.com.fiap.fasteats.entrypoint.queue;
 
 import br.com.fiap.fasteats.core.usecase.ProducaoPedidoInputPort;
-import br.com.fiap.fasteats.dataprovider.client.ReceberPedidoIntegration;
 import br.com.fiap.fasteats.dataprovider.client.request.CozinhaErroReceberPedidoRequest;
 import br.com.fiap.fasteats.dataprovider.client.response.ReceberPedidoResponse;
 import com.google.gson.Gson;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReceberPedidoIntegrationImpl implements ReceberPedidoIntegration {
+public class ReceberPedidoIntegration {
     @Value("${sqs.queue.cozinha.receber.pedido}")
     private String filaCozinhaReceberPedido;
     @Value("${sqs.queue.cozinha.erro.receber.pedido}")
@@ -23,7 +22,6 @@ public class ReceberPedidoIntegrationImpl implements ReceberPedidoIntegration {
     private final SqsTemplate sqsTemplate;
     private final ProducaoPedidoInputPort producaoPedidoInputPort;
 
-    @Override
     @SqsListener("${sqs.queue.cozinha.receber.pedido}")
     public void receber(String mensagem) {
         ReceberPedidoResponse pedidoResponse = new Gson().fromJson(mensagem, ReceberPedidoResponse.class);
