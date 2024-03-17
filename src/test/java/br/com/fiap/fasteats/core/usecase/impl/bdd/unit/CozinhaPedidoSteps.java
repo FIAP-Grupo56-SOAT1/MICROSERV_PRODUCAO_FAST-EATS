@@ -7,12 +7,15 @@ import br.com.fiap.fasteats.core.usecase.AlterarPedidoStatusInputPort;
 import br.com.fiap.fasteats.core.usecase.impl.CozinhaPedidoUseCase;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
+import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +33,8 @@ public class CozinhaPedidoSteps {
     private CozinhaPedido cozinhaPedido;
     private CozinhaPedido cozinhaPedidoRetornado;
 
+    List<CozinhaPedido> listar;
+
     public CozinhaPedidoSteps() {
         MockitoAnnotations.openMocks(this);
     }
@@ -42,16 +47,6 @@ public class CozinhaPedidoSteps {
         when(cozinhaPedidoOutputPort.consultar(cozinhaPedidoId)).thenReturn(Optional.of(cozinhaPedido));
     }
 
-    @Dado("que existe um Pedido com ID {long}")
-    public void existeUmPedidoComId(Long pedidoId) {
-        configureMockForStatus(pedidoId, "Recebido");
-    }
-
-    @Dado("existe um Cozinha Pedido associado ao Pedido com ID {long}")
-    public void existeUmCozinhaPedidoAssociadoAoPedidoComId(Long pedidoId) {
-        configureMockForStatus(pedidoId, "Recebido");
-        when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
-    }
 
     @Quando("o usuário consulta o Cozinha Pedido por ID {string}")
     public void usuarioConsultaCozinhaPedidoPorId(String cozinhaPedidoId) {
@@ -84,17 +79,8 @@ public class CozinhaPedidoSteps {
         assertEquals(pedidoId, cozinhaPedido.getIdPedido());
     }
 
-    @Entao("é retornado o Cozinha Pedido atualizado com o status {string}")
-    public void retornadoCozinhaPedidoAtualizadoComStatus(String status) {
-        assertNotNull(cozinhaPedidoRetornado);
-        assertEquals(status, cozinhaPedidoRetornado.getProcessoAtual());
-    }
 
-    @Entao("o status do pedido foi atualizado para {string}")
-    public void statusPedidoAtualizadoPara(String status) {
-        assertNotNull(cozinhaPedidoRetornado);
-        assertEquals(status, cozinhaPedidoRetornado.getStatusPedido());
-    }
+
 
     private void configureMockForStatus(Long pedidoId, String status) {
         Pedido pedido = new Pedido();
@@ -110,5 +96,43 @@ public class CozinhaPedidoSteps {
         cozinhaPedido.setDataInicioPreparo(LocalDateTime.now());
         cozinhaPedido.setDataFinalizacaoPreparo(LocalDateTime.now());
         cozinhaPedido.setDataEntregaPedido(LocalDateTime.now());
+    }
+
+    @Dado("que existe um Pedido com ID {long} na cozinha")
+    public void existeUmPedidoComId(Long pedidoId) {
+        configureMockForStatus(pedidoId, "Recebido");
+    }
+
+    @Dado("existe na Cozinha  um Pedido associado ao Pedido com ID {long}")
+    public void existeUmCozinhaPedidoAssociadoAoPedidoComId(Long pedidoId) {
+        configureMockForStatus(pedidoId, "Recebido");
+        when(cozinhaPedidoOutputPort.consultarPorIdPedido(pedidoId)).thenReturn(Optional.of(cozinhaPedido));
+    }
+
+    @Dado("que existe pedidos na cozinha")
+    public void queExistePedidosNaCozinha() {
+        CozinhaPedido pedidoCozinha1 = new CozinhaPedido();
+        pedidoCozinha1.setIdPedido(1l);
+
+        CozinhaPedido pedidoCozinha2 = new CozinhaPedido();
+        pedidoCozinha2.setIdPedido(2l);
+
+        CozinhaPedido pedidoCozinha3 = new CozinhaPedido();
+        pedidoCozinha3.setIdPedido(3l);
+        listar = new ArrayList<CozinhaPedido>();
+        listar.add(pedidoCozinha1);
+        listar.add(pedidoCozinha2);
+        listar.add(pedidoCozinha3);
+
+    }
+
+    @Quando("o usuário consulta a lista de pedidos")
+    public void oUsuárioConsultaAListaDePedidos() {
+        when(cozinhaPedidoOutputPort.listar()).thenReturn(listar);
+    }
+
+    @Então("é retornado uma lista de  Cozinha Pedido")
+    public void éRetornadoUmaListaDeCozinhaPedido() {
+        assertNotNull(listar);
     }
 }
